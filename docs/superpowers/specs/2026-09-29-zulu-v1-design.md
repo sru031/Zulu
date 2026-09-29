@@ -52,9 +52,10 @@ These come from the Finch onboarding teardown and six Reddit threads of Finch us
 | Concern | Choice | Why |
 |---|---|---|
 | Framework | Flutter (latest stable), Dart 3 | One codebase for Android and iOS |
+| UI components | `material_ui` | Flutter's Material library, now its own package. go_router 18 depends on it |
 | State and dependency injection | `flutter_riverpod` | Testable, compile-safe, little boilerplate |
 | Navigation | `go_router` | Declarative routes and onboarding redirect guards |
-| Local database | `drift` + `sqlite3_flutter_libs` | Typed SQL, migrations, cheap history queries, easy future sync |
+| Local database | `drift` + `drift_flutter` | Typed SQL, migrations, cheap history queries, easy future sync. `drift_flutter` bundles SQLite; `sqlite3_flutter_libs` is end-of-life |
 | Notifications | `flutter_local_notifications` + `timezone` + `flutter_timezone` | Scheduled local reminders |
 | Animation | `rive`, `lottie`, plus Flutter's built-in animation | All three art formats (see §4) |
 | Backup | `share_plus`, `file_picker`, `path_provider` | Export and import a JSON backup file |
@@ -562,7 +563,7 @@ All notifications are local and scheduled on the device.
 
 | Failure | Behavior |
 |---|---|
-| Content or theme JSON invalid | Debug builds stop with the exact file, field and problem. Release builds fall back to built-in defaults for what failed and log it |
+| Content or theme JSON invalid | Content ships inside the app and is checked by tests before every build. Debug builds stop with the exact file, field and problem. If a release build still can't read it, the app shows a calm "Zulu couldn't start" screen instead of crashing |
 | Missing art file | The fallback chain in §4.2. Effects fall back to Flutter animations |
 | Database migration fails | The database file is copied before every migration. On failure, a recovery screen offers "export what we can" and "start fresh" |
 | Notification permission denied | The app works fully. Settings show the reminders are off, with a button to system settings |
@@ -599,7 +600,7 @@ All notifications are local and scheduled on the device.
 
 ## 15. Build order
 
-The implementation plan details each step.
+Each group below gets its own implementation plan in `docs/superpowers/plans/`, written just before it's built. Every plan ends with an app that runs.
 
 1. **Foundation:** project, lints, folders, Clock/AppDay, Drift schema, content and theme loaders, validator, placeholder assets, theme colors.
 2. **Onboarding:** engine (QuestionFlow, PlanGenerator), all screen types, resume, plan screen.
