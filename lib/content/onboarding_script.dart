@@ -104,6 +104,8 @@ class StepOption {
   /// For talk-choice replies: the trait this reply nudges, by [nudge].
   final Trait? trait;
   final double nudge;
+
+  StepOption withLabel(String label) => StepOption(id: id, label: label, icon: icon, trait: trait, nudge: nudge);
 }
 
 class OnboardingStep {
