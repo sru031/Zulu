@@ -1,0 +1,18 @@
+{
+  "rooms": [
+    {
+      "id": "home",
+      "background": "rooms/home/background.png",
+      "width": 1080,
+      "height": 1080,
+      "pet": { "x": 540, "y": 720, "scale": 1.2 },
+      "slots": {
+        "wall_left": { "x": 220, "y": 330 },
+        "wall_right": { "x": 860, "y": 330 },
+        "window": { "x": 540, "y": 260 },
+        "floor_left": { "x": 190, "y": 820 },
+        "floor_right": { "x": 890, "y": 820 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "effects": {
+    "goal_done": "effects/goal_done.json",
+    "coins_burst": "effects/coins_burst.json",
+    "energy_full": "effects/energy_full.json",
+    "hatch_crack": "effects/hatch_crack.json",
+    "plan_loading": "effects/plan_loading.json",
+    "adventure_depart": "effects/adventure_depart.json",
+    "adventure_return": "effects/adventure_return.json",
+    "milestone": "effects/milestone.json",
+    "evolve": "effects/evolve.json",
+    "surprise_gift": "effects/surprise_gift.json"
+  }
+}

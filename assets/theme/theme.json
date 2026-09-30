@@ -1,0 +1,10 @@
+{
+  "appName": "Zulu",
+  "petSpecies": { "singular": "critter", "plural": "critters" },
+  "currency": { "singular": "coin", "plural": "coins", "icon": "icons/currency.png" },
+  "colors": {
+    "light": { "primary": "#6C8CFF", "background": "#FFF8F0", "surface": "#FFFFFF", "text": "#2B2B2B", "energy": "#FFC857", "success": "#4CAF7A" },
+    "dark": { "primary": "#8FA6FF", "background": "#1C1B22", "surface": "#26252D", "text": "#F2F0EA", "energy": "#FFD37A", "success": "#6CCB96" }
+  },
+  "moodIcons": ["😞", "🙁", "😐", "🙂", "😄"]
+}

@@ -1,0 +1,85 @@
+{
+  "canvas": 512,
+  "eggs": [
+    { "id": "sunrise", "image": "pet/eggs/sunrise.png" },
+    { "id": "sky", "image": "pet/eggs/sky.png" },
+    { "id": "mint", "image": "pet/eggs/mint.png" },
+    { "id": "lilac", "image": "pet/eggs/lilac.png" },
+    { "id": "blush", "image": "pet/eggs/blush.png" },
+    { "id": "sand", "image": "pet/eggs/sand.png" }
+  ],
+  "stages": {
+    "baby": {
+      "poses": {
+        "idle": { "type": "png", "path": "pet/baby/idle.png" },
+        "happy": { "type": "png", "path": "pet/baby/happy.png" },
+        "curious": { "type": "png", "path": "pet/baby/curious.png" },
+        "sleepy": { "type": "png", "path": "pet/baby/sleepy.png" },
+        "away": { "type": "png", "path": "pet/baby/away.png" },
+        "celebrate": { "type": "png", "path": "pet/baby/celebrate.png" },
+        "hatch": { "type": "png", "path": "pet/baby/hatch.png" }
+      },
+      "anchors": {
+        "head": { "x": 256, "y": 200, "scale": 1.0 },
+        "face": { "x": 256, "y": 278, "scale": 1.0 },
+        "neck": { "x": 256, "y": 345, "scale": 1.0 },
+        "body": { "x": 256, "y": 360, "scale": 1.0 },
+        "held": { "x": 400, "y": 330, "scale": 0.9 }
+      }
+    },
+    "toddler": {
+      "poses": {
+        "idle": { "type": "png", "path": "pet/toddler/idle.png" },
+        "happy": { "type": "png", "path": "pet/toddler/happy.png" },
+        "curious": { "type": "png", "path": "pet/toddler/curious.png" },
+        "sleepy": { "type": "png", "path": "pet/toddler/sleepy.png" },
+        "away": { "type": "png", "path": "pet/toddler/away.png" },
+        "celebrate": { "type": "png", "path": "pet/toddler/celebrate.png" },
+        "hatch": { "type": "png", "path": "pet/toddler/hatch.png" }
+      },
+      "anchors": {
+        "head": { "x": 256, "y": 175, "scale": 1.15 },
+        "face": { "x": 256, "y": 273, "scale": 1.15 },
+        "neck": { "x": 256, "y": 355, "scale": 1.15 },
+        "body": { "x": 256, "y": 375, "scale": 1.2 },
+        "held": { "x": 400, "y": 330, "scale": 1.0 }
+      }
+    },
+    "teen": {
+      "poses": {
+        "idle": { "type": "png", "path": "pet/teen/idle.png" },
+        "happy": { "type": "png", "path": "pet/teen/happy.png" },
+        "curious": { "type": "png", "path": "pet/teen/curious.png" },
+        "sleepy": { "type": "png", "path": "pet/teen/sleepy.png" },
+        "away": { "type": "png", "path": "pet/teen/away.png" },
+        "celebrate": { "type": "png", "path": "pet/teen/celebrate.png" },
+        "hatch": { "type": "png", "path": "pet/teen/hatch.png" }
+      },
+      "anchors": {
+        "head": { "x": 256, "y": 155, "scale": 1.3 },
+        "face": { "x": 256, "y": 269, "scale": 1.3 },
+        "neck": { "x": 256, "y": 362, "scale": 1.3 },
+        "body": { "x": 256, "y": 390, "scale": 1.35 },
+        "held": { "x": 400, "y": 330, "scale": 1.1 }
+      }
+    },
+    "adult": {
+      "poses": {
+        "idle": { "type": "png", "path": "pet/adult/idle.png" },
+        "happy": { "type": "png", "path": "pet/adult/happy.png" },
+        "curious": { "type": "png", "path": "pet/adult/curious.png" },
+        "sleepy": { "type": "png", "path": "pet/adult/sleepy.png" },
+        "away": { "type": "png", "path": "pet/adult/away.png" },
+        "celebrate": { "type": "png", "path": "pet/adult/celebrate.png" },
+        "hatch": { "type": "png", "path": "pet/adult/hatch.png" }
+      },
+      "anchors": {
+        "head": { "x": 256, "y": 135, "scale": 1.45 },
+        "face": { "x": 256, "y": 265, "scale": 1.45 },
+        "neck": { "x": 256, "y": 370, "scale": 1.45 },
+        "body": { "x": 256, "y": 400, "scale": 1.5 },
+        "held": { "x": 400, "y": 330, "scale": 1.2 }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "items": [
+    { "id": "sun_hat", "name": "Sun hat", "kind": "outfit", "slot": "head", "price": 120, "image": "items/sun_hat.png" },
+    { "id": "flower_crown", "name": "Flower crown", "kind": "outfit", "slot": "head", "price": 90, "image": "items/flower_crown.png" },
+    { "id": "round_glasses", "name": "Round glasses", "kind": "outfit", "slot": "face", "price": 40, "image": "items/round_glasses.png", "everyday": true },
+    { "id": "star_glasses", "name": "Star glasses", "kind": "outfit", "slot": "face", "price": 150, "image": "items/star_glasses.png" },
+    { "id": "cozy_scarf", "name": "Cozy scarf", "kind": "outfit", "slot": "neck", "price": 50, "image": "items/cozy_scarf.png", "everyday": true },
+    { "id": "bow_tie", "name": "Bow tie", "kind": "outfit", "slot": "neck", "price": 70, "image": "items/bow_tie.png" },
+    { "id": "rain_coat", "name": "Rain coat", "kind": "outfit", "slot": "body", "price": 220, "image": "items/rain_coat.png" },
+    { "id": "sweater", "name": "Sweater", "kind": "outfit", "slot": "body", "price": 180, "image": "items/sweater.png" },
+    { "id": "balloon", "name": "Balloon", "kind": "outfit", "slot": "held", "price": 60, "image": "items/balloon.png" },
+    { "id": "tea_cup", "name": "Tea cup", "kind": "outfit", "slot": "held", "price": 30, "image": "items/tea_cup.png" },
+    { "id": "potted_plant", "name": "Potted plant", "kind": "decor", "slot": "floor_left", "price": 60, "image": "items/potted_plant.png", "everyday": true },
+    { "id": "floor_lamp", "name": "Floor lamp", "kind": "decor", "slot": "floor_right", "price": 140, "image": "items/floor_lamp.png" },
+    { "id": "star_poster", "name": "Star poster", "kind": "decor", "slot": "wall_left", "price": 80, "image": "items/star_poster.png" },
+    { "id": "wall_clock", "name": "Wall clock", "kind": "decor", "slot": "wall_right", "price": 100, "image": "items/wall_clock.png" },
+    { "id": "wind_chime", "name": "Wind chime", "kind": "decor", "slot": "window", "price": 300, "image": "items/wind_chime.png" }
+  ]
+}
