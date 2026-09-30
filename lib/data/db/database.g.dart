@@ -1426,16 +1426,1060 @@ class PetsCompanion extends UpdateCompanion<Pet> {
   }
 }
 
+class $OnboardingAnswersTable extends OnboardingAnswers
+    with TableInfo<$OnboardingAnswersTable, OnboardingAnswer> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OnboardingAnswersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _questionIdMeta = const VerificationMeta(
+    'questionId',
+  );
+  @override
+  late final GeneratedColumn<String> questionId = GeneratedColumn<String>(
+    'question_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _answeredAtMeta = const VerificationMeta(
+    'answeredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> answeredAt = GeneratedColumn<DateTime>(
+    'answered_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [questionId, value, answeredAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'onboarding_answers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<OnboardingAnswer> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('question_id')) {
+      context.handle(
+        _questionIdMeta,
+        questionId.isAcceptableOrUnknown(data['question_id']!, _questionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_questionIdMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('answered_at')) {
+      context.handle(
+        _answeredAtMeta,
+        answeredAt.isAcceptableOrUnknown(data['answered_at']!, _answeredAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_answeredAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {questionId};
+  @override
+  OnboardingAnswer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OnboardingAnswer(
+      questionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}question_id'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+      answeredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}answered_at'],
+      )!,
+    );
+  }
+
+  @override
+  $OnboardingAnswersTable createAlias(String alias) {
+    return $OnboardingAnswersTable(attachedDatabase, alias);
+  }
+}
+
+class OnboardingAnswer extends DataClass
+    implements Insertable<OnboardingAnswer> {
+  final String questionId;
+
+  /// JSON: a string or a list of strings.
+  final String value;
+  final DateTime answeredAt;
+  const OnboardingAnswer({
+    required this.questionId,
+    required this.value,
+    required this.answeredAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['question_id'] = Variable<String>(questionId);
+    map['value'] = Variable<String>(value);
+    map['answered_at'] = Variable<DateTime>(answeredAt);
+    return map;
+  }
+
+  OnboardingAnswersCompanion toCompanion(bool nullToAbsent) {
+    return OnboardingAnswersCompanion(
+      questionId: Value(questionId),
+      value: Value(value),
+      answeredAt: Value(answeredAt),
+    );
+  }
+
+  factory OnboardingAnswer.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return OnboardingAnswer(
+      questionId: serializer.fromJson<String>(json['questionId']),
+      value: serializer.fromJson<String>(json['value']),
+      answeredAt: serializer.fromJson<DateTime>(json['answeredAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'questionId': serializer.toJson<String>(questionId),
+      'value': serializer.toJson<String>(value),
+      'answeredAt': serializer.toJson<DateTime>(answeredAt),
+    };
+  }
+
+  OnboardingAnswer copyWith({
+    String? questionId,
+    String? value,
+    DateTime? answeredAt,
+  }) => OnboardingAnswer(
+    questionId: questionId ?? this.questionId,
+    value: value ?? this.value,
+    answeredAt: answeredAt ?? this.answeredAt,
+  );
+  OnboardingAnswer copyWithCompanion(OnboardingAnswersCompanion data) {
+    return OnboardingAnswer(
+      questionId: data.questionId.present
+          ? data.questionId.value
+          : this.questionId,
+      value: data.value.present ? data.value.value : this.value,
+      answeredAt: data.answeredAt.present
+          ? data.answeredAt.value
+          : this.answeredAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OnboardingAnswer(')
+          ..write('questionId: $questionId, ')
+          ..write('value: $value, ')
+          ..write('answeredAt: $answeredAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(questionId, value, answeredAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is OnboardingAnswer &&
+          other.questionId == this.questionId &&
+          other.value == this.value &&
+          other.answeredAt == this.answeredAt);
+}
+
+class OnboardingAnswersCompanion extends UpdateCompanion<OnboardingAnswer> {
+  final Value<String> questionId;
+  final Value<String> value;
+  final Value<DateTime> answeredAt;
+  final Value<int> rowid;
+  const OnboardingAnswersCompanion({
+    this.questionId = const Value.absent(),
+    this.value = const Value.absent(),
+    this.answeredAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  OnboardingAnswersCompanion.insert({
+    required String questionId,
+    required String value,
+    required DateTime answeredAt,
+    this.rowid = const Value.absent(),
+  }) : questionId = Value(questionId),
+       value = Value(value),
+       answeredAt = Value(answeredAt);
+  static Insertable<OnboardingAnswer> custom({
+    Expression<String>? questionId,
+    Expression<String>? value,
+    Expression<DateTime>? answeredAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (questionId != null) 'question_id': questionId,
+      if (value != null) 'value': value,
+      if (answeredAt != null) 'answered_at': answeredAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  OnboardingAnswersCompanion copyWith({
+    Value<String>? questionId,
+    Value<String>? value,
+    Value<DateTime>? answeredAt,
+    Value<int>? rowid,
+  }) {
+    return OnboardingAnswersCompanion(
+      questionId: questionId ?? this.questionId,
+      value: value ?? this.value,
+      answeredAt: answeredAt ?? this.answeredAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (questionId.present) {
+      map['question_id'] = Variable<String>(questionId.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (answeredAt.present) {
+      map['answered_at'] = Variable<DateTime>(answeredAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OnboardingAnswersCompanion(')
+          ..write('questionId: $questionId, ')
+          ..write('value: $value, ')
+          ..write('answeredAt: $answeredAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GoalsTable extends Goals with TableInfo<$GoalsTable, Goal> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GoalsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
+  @override
+  late final GeneratedColumn<String> icon = GeneratedColumn<String>(
+    'icon',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _areaMeta = const VerificationMeta('area');
+  @override
+  late final GeneratedColumn<String> area = GeneratedColumn<String>(
+    'area',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sectionMeta = const VerificationMeta(
+    'section',
+  );
+  @override
+  late final GeneratedColumn<String> section = GeneratedColumn<String>(
+    'section',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weekdaysMaskMeta = const VerificationMeta(
+    'weekdaysMask',
+  );
+  @override
+  late final GeneratedColumn<int> weekdaysMask = GeneratedColumn<int>(
+    'weekdays_mask',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(127),
+  );
+  static const VerificationMeta _timesPerDayMeta = const VerificationMeta(
+    'timesPerDay',
+  );
+  @override
+  late final GeneratedColumn<int> timesPerDay = GeneratedColumn<int>(
+    'times_per_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _essentialMeta = const VerificationMeta(
+    'essential',
+  );
+  @override
+  late final GeneratedColumn<bool> essential = GeneratedColumn<bool>(
+    'essential',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("essential" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _reminderTimeMeta = const VerificationMeta(
+    'reminderTime',
+  );
+  @override
+  late final GeneratedColumn<String> reminderTime = GeneratedColumn<String>(
+    'reminder_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _libraryIdMeta = const VerificationMeta(
+    'libraryId',
+  );
+  @override
+  late final GeneratedColumn<String> libraryId = GeneratedColumn<String>(
+    'library_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    icon,
+    area,
+    section,
+    weekdaysMask,
+    timesPerDay,
+    essential,
+    reminderTime,
+    sortOrder,
+    libraryId,
+    archivedAt,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'goals';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Goal> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('icon')) {
+      context.handle(
+        _iconMeta,
+        icon.isAcceptableOrUnknown(data['icon']!, _iconMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_iconMeta);
+    }
+    if (data.containsKey('area')) {
+      context.handle(
+        _areaMeta,
+        area.isAcceptableOrUnknown(data['area']!, _areaMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_areaMeta);
+    }
+    if (data.containsKey('section')) {
+      context.handle(
+        _sectionMeta,
+        section.isAcceptableOrUnknown(data['section']!, _sectionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sectionMeta);
+    }
+    if (data.containsKey('weekdays_mask')) {
+      context.handle(
+        _weekdaysMaskMeta,
+        weekdaysMask.isAcceptableOrUnknown(
+          data['weekdays_mask']!,
+          _weekdaysMaskMeta,
+        ),
+      );
+    }
+    if (data.containsKey('times_per_day')) {
+      context.handle(
+        _timesPerDayMeta,
+        timesPerDay.isAcceptableOrUnknown(
+          data['times_per_day']!,
+          _timesPerDayMeta,
+        ),
+      );
+    }
+    if (data.containsKey('essential')) {
+      context.handle(
+        _essentialMeta,
+        essential.isAcceptableOrUnknown(data['essential']!, _essentialMeta),
+      );
+    }
+    if (data.containsKey('reminder_time')) {
+      context.handle(
+        _reminderTimeMeta,
+        reminderTime.isAcceptableOrUnknown(
+          data['reminder_time']!,
+          _reminderTimeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('library_id')) {
+      context.handle(
+        _libraryIdMeta,
+        libraryId.isAcceptableOrUnknown(data['library_id']!, _libraryIdMeta),
+      );
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Goal map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Goal(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      icon: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}icon'],
+      )!,
+      area: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}area'],
+      )!,
+      section: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}section'],
+      )!,
+      weekdaysMask: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}weekdays_mask'],
+      )!,
+      timesPerDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}times_per_day'],
+      )!,
+      essential: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}essential'],
+      )!,
+      reminderTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reminder_time'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      libraryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}library_id'],
+      ),
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GoalsTable createAlias(String alias) {
+    return $GoalsTable(attachedDatabase, alias);
+  }
+}
+
+class Goal extends DataClass implements Insertable<Goal> {
+  final int id;
+  final String title;
+
+  /// An emoji.
+  final String icon;
+  final String area;
+
+  /// A `GoalSection` id: `start_day`, `any_time` or `end_day`.
+  final String section;
+
+  /// Bit 0 = Monday … bit 6 = Sunday; 127 = every day.
+  final int weekdaysMask;
+  final int timesPerDay;
+  final bool essential;
+
+  /// `HH:mm`, or null for no reminder.
+  final String? reminderTime;
+  final int sortOrder;
+
+  /// The `GoalTemplate` id this came from, if any.
+  final String? libraryId;
+  final DateTime? archivedAt;
+  final DateTime createdAt;
+  const Goal({
+    required this.id,
+    required this.title,
+    required this.icon,
+    required this.area,
+    required this.section,
+    required this.weekdaysMask,
+    required this.timesPerDay,
+    required this.essential,
+    this.reminderTime,
+    required this.sortOrder,
+    this.libraryId,
+    this.archivedAt,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['icon'] = Variable<String>(icon);
+    map['area'] = Variable<String>(area);
+    map['section'] = Variable<String>(section);
+    map['weekdays_mask'] = Variable<int>(weekdaysMask);
+    map['times_per_day'] = Variable<int>(timesPerDay);
+    map['essential'] = Variable<bool>(essential);
+    if (!nullToAbsent || reminderTime != null) {
+      map['reminder_time'] = Variable<String>(reminderTime);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    if (!nullToAbsent || libraryId != null) {
+      map['library_id'] = Variable<String>(libraryId);
+    }
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  GoalsCompanion toCompanion(bool nullToAbsent) {
+    return GoalsCompanion(
+      id: Value(id),
+      title: Value(title),
+      icon: Value(icon),
+      area: Value(area),
+      section: Value(section),
+      weekdaysMask: Value(weekdaysMask),
+      timesPerDay: Value(timesPerDay),
+      essential: Value(essential),
+      reminderTime: reminderTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reminderTime),
+      sortOrder: Value(sortOrder),
+      libraryId: libraryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(libraryId),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Goal.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Goal(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      icon: serializer.fromJson<String>(json['icon']),
+      area: serializer.fromJson<String>(json['area']),
+      section: serializer.fromJson<String>(json['section']),
+      weekdaysMask: serializer.fromJson<int>(json['weekdaysMask']),
+      timesPerDay: serializer.fromJson<int>(json['timesPerDay']),
+      essential: serializer.fromJson<bool>(json['essential']),
+      reminderTime: serializer.fromJson<String?>(json['reminderTime']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      libraryId: serializer.fromJson<String?>(json['libraryId']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'icon': serializer.toJson<String>(icon),
+      'area': serializer.toJson<String>(area),
+      'section': serializer.toJson<String>(section),
+      'weekdaysMask': serializer.toJson<int>(weekdaysMask),
+      'timesPerDay': serializer.toJson<int>(timesPerDay),
+      'essential': serializer.toJson<bool>(essential),
+      'reminderTime': serializer.toJson<String?>(reminderTime),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'libraryId': serializer.toJson<String?>(libraryId),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Goal copyWith({
+    int? id,
+    String? title,
+    String? icon,
+    String? area,
+    String? section,
+    int? weekdaysMask,
+    int? timesPerDay,
+    bool? essential,
+    Value<String?> reminderTime = const Value.absent(),
+    int? sortOrder,
+    Value<String?> libraryId = const Value.absent(),
+    Value<DateTime?> archivedAt = const Value.absent(),
+    DateTime? createdAt,
+  }) => Goal(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    icon: icon ?? this.icon,
+    area: area ?? this.area,
+    section: section ?? this.section,
+    weekdaysMask: weekdaysMask ?? this.weekdaysMask,
+    timesPerDay: timesPerDay ?? this.timesPerDay,
+    essential: essential ?? this.essential,
+    reminderTime: reminderTime.present ? reminderTime.value : this.reminderTime,
+    sortOrder: sortOrder ?? this.sortOrder,
+    libraryId: libraryId.present ? libraryId.value : this.libraryId,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  Goal copyWithCompanion(GoalsCompanion data) {
+    return Goal(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      icon: data.icon.present ? data.icon.value : this.icon,
+      area: data.area.present ? data.area.value : this.area,
+      section: data.section.present ? data.section.value : this.section,
+      weekdaysMask: data.weekdaysMask.present
+          ? data.weekdaysMask.value
+          : this.weekdaysMask,
+      timesPerDay: data.timesPerDay.present
+          ? data.timesPerDay.value
+          : this.timesPerDay,
+      essential: data.essential.present ? data.essential.value : this.essential,
+      reminderTime: data.reminderTime.present
+          ? data.reminderTime.value
+          : this.reminderTime,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      libraryId: data.libraryId.present ? data.libraryId.value : this.libraryId,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Goal(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('icon: $icon, ')
+          ..write('area: $area, ')
+          ..write('section: $section, ')
+          ..write('weekdaysMask: $weekdaysMask, ')
+          ..write('timesPerDay: $timesPerDay, ')
+          ..write('essential: $essential, ')
+          ..write('reminderTime: $reminderTime, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('libraryId: $libraryId, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    icon,
+    area,
+    section,
+    weekdaysMask,
+    timesPerDay,
+    essential,
+    reminderTime,
+    sortOrder,
+    libraryId,
+    archivedAt,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Goal &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.icon == this.icon &&
+          other.area == this.area &&
+          other.section == this.section &&
+          other.weekdaysMask == this.weekdaysMask &&
+          other.timesPerDay == this.timesPerDay &&
+          other.essential == this.essential &&
+          other.reminderTime == this.reminderTime &&
+          other.sortOrder == this.sortOrder &&
+          other.libraryId == this.libraryId &&
+          other.archivedAt == this.archivedAt &&
+          other.createdAt == this.createdAt);
+}
+
+class GoalsCompanion extends UpdateCompanion<Goal> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> icon;
+  final Value<String> area;
+  final Value<String> section;
+  final Value<int> weekdaysMask;
+  final Value<int> timesPerDay;
+  final Value<bool> essential;
+  final Value<String?> reminderTime;
+  final Value<int> sortOrder;
+  final Value<String?> libraryId;
+  final Value<DateTime?> archivedAt;
+  final Value<DateTime> createdAt;
+  const GoalsCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.icon = const Value.absent(),
+    this.area = const Value.absent(),
+    this.section = const Value.absent(),
+    this.weekdaysMask = const Value.absent(),
+    this.timesPerDay = const Value.absent(),
+    this.essential = const Value.absent(),
+    this.reminderTime = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.libraryId = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  GoalsCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String icon,
+    required String area,
+    required String section,
+    this.weekdaysMask = const Value.absent(),
+    this.timesPerDay = const Value.absent(),
+    this.essential = const Value.absent(),
+    this.reminderTime = const Value.absent(),
+    required int sortOrder,
+    this.libraryId = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    required DateTime createdAt,
+  }) : title = Value(title),
+       icon = Value(icon),
+       area = Value(area),
+       section = Value(section),
+       sortOrder = Value(sortOrder),
+       createdAt = Value(createdAt);
+  static Insertable<Goal> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? icon,
+    Expression<String>? area,
+    Expression<String>? section,
+    Expression<int>? weekdaysMask,
+    Expression<int>? timesPerDay,
+    Expression<bool>? essential,
+    Expression<String>? reminderTime,
+    Expression<int>? sortOrder,
+    Expression<String>? libraryId,
+    Expression<DateTime>? archivedAt,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (icon != null) 'icon': icon,
+      if (area != null) 'area': area,
+      if (section != null) 'section': section,
+      if (weekdaysMask != null) 'weekdays_mask': weekdaysMask,
+      if (timesPerDay != null) 'times_per_day': timesPerDay,
+      if (essential != null) 'essential': essential,
+      if (reminderTime != null) 'reminder_time': reminderTime,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (libraryId != null) 'library_id': libraryId,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  GoalsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? title,
+    Value<String>? icon,
+    Value<String>? area,
+    Value<String>? section,
+    Value<int>? weekdaysMask,
+    Value<int>? timesPerDay,
+    Value<bool>? essential,
+    Value<String?>? reminderTime,
+    Value<int>? sortOrder,
+    Value<String?>? libraryId,
+    Value<DateTime?>? archivedAt,
+    Value<DateTime>? createdAt,
+  }) {
+    return GoalsCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      icon: icon ?? this.icon,
+      area: area ?? this.area,
+      section: section ?? this.section,
+      weekdaysMask: weekdaysMask ?? this.weekdaysMask,
+      timesPerDay: timesPerDay ?? this.timesPerDay,
+      essential: essential ?? this.essential,
+      reminderTime: reminderTime ?? this.reminderTime,
+      sortOrder: sortOrder ?? this.sortOrder,
+      libraryId: libraryId ?? this.libraryId,
+      archivedAt: archivedAt ?? this.archivedAt,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (icon.present) {
+      map['icon'] = Variable<String>(icon.value);
+    }
+    if (area.present) {
+      map['area'] = Variable<String>(area.value);
+    }
+    if (section.present) {
+      map['section'] = Variable<String>(section.value);
+    }
+    if (weekdaysMask.present) {
+      map['weekdays_mask'] = Variable<int>(weekdaysMask.value);
+    }
+    if (timesPerDay.present) {
+      map['times_per_day'] = Variable<int>(timesPerDay.value);
+    }
+    if (essential.present) {
+      map['essential'] = Variable<bool>(essential.value);
+    }
+    if (reminderTime.present) {
+      map['reminder_time'] = Variable<String>(reminderTime.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (libraryId.present) {
+      map['library_id'] = Variable<String>(libraryId.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GoalsCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('icon: $icon, ')
+          ..write('area: $area, ')
+          ..write('section: $section, ')
+          ..write('weekdaysMask: $weekdaysMask, ')
+          ..write('timesPerDay: $timesPerDay, ')
+          ..write('essential: $essential, ')
+          ..write('reminderTime: $reminderTime, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('libraryId: $libraryId, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ProfilesTable profiles = $ProfilesTable(this);
   late final $PetsTable pets = $PetsTable(this);
+  late final $OnboardingAnswersTable onboardingAnswers =
+      $OnboardingAnswersTable(this);
+  late final $GoalsTable goals = $GoalsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [profiles, pets];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    profiles,
+    pets,
+    onboardingAnswers,
+    goals,
+  ];
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
@@ -2109,6 +3153,548 @@ typedef $$PetsTableProcessedTableManager =
       Pet,
       PrefetchHooks Function()
     >;
+typedef $$OnboardingAnswersTableCreateCompanionBuilder =
+    OnboardingAnswersCompanion Function({
+      required String questionId,
+      required String value,
+      required DateTime answeredAt,
+      Value<int> rowid,
+    });
+typedef $$OnboardingAnswersTableUpdateCompanionBuilder =
+    OnboardingAnswersCompanion Function({
+      Value<String> questionId,
+      Value<String> value,
+      Value<DateTime> answeredAt,
+      Value<int> rowid,
+    });
+
+class $$OnboardingAnswersTableFilterComposer
+    extends Composer<_$AppDatabase, $OnboardingAnswersTable> {
+  $$OnboardingAnswersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get questionId => $composableBuilder(
+    column: $table.questionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$OnboardingAnswersTableOrderingComposer
+    extends Composer<_$AppDatabase, $OnboardingAnswersTable> {
+  $$OnboardingAnswersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get questionId => $composableBuilder(
+    column: $table.questionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$OnboardingAnswersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $OnboardingAnswersTable> {
+  $$OnboardingAnswersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get questionId => $composableBuilder(
+    column: $table.questionId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => column,
+  );
+}
+
+class $$OnboardingAnswersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $OnboardingAnswersTable,
+          OnboardingAnswer,
+          $$OnboardingAnswersTableFilterComposer,
+          $$OnboardingAnswersTableOrderingComposer,
+          $$OnboardingAnswersTableAnnotationComposer,
+          $$OnboardingAnswersTableCreateCompanionBuilder,
+          $$OnboardingAnswersTableUpdateCompanionBuilder,
+          (
+            OnboardingAnswer,
+            BaseReferences<
+              _$AppDatabase,
+              $OnboardingAnswersTable,
+              OnboardingAnswer
+            >,
+          ),
+          OnboardingAnswer,
+          PrefetchHooks Function()
+        > {
+  $$OnboardingAnswersTableTableManager(
+    _$AppDatabase db,
+    $OnboardingAnswersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$OnboardingAnswersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$OnboardingAnswersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$OnboardingAnswersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> questionId = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<DateTime> answeredAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => OnboardingAnswersCompanion(
+                questionId: questionId,
+                value: value,
+                answeredAt: answeredAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String questionId,
+                required String value,
+                required DateTime answeredAt,
+                Value<int> rowid = const Value.absent(),
+              }) => OnboardingAnswersCompanion.insert(
+                questionId: questionId,
+                value: value,
+                answeredAt: answeredAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$OnboardingAnswersTable, OnboardingAnswer>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $OnboardingAnswersTable,
+                    OnboardingAnswer
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$OnboardingAnswersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $OnboardingAnswersTable,
+      OnboardingAnswer,
+      $$OnboardingAnswersTableFilterComposer,
+      $$OnboardingAnswersTableOrderingComposer,
+      $$OnboardingAnswersTableAnnotationComposer,
+      $$OnboardingAnswersTableCreateCompanionBuilder,
+      $$OnboardingAnswersTableUpdateCompanionBuilder,
+      (
+        OnboardingAnswer,
+        BaseReferences<
+          _$AppDatabase,
+          $OnboardingAnswersTable,
+          OnboardingAnswer
+        >,
+      ),
+      OnboardingAnswer,
+      PrefetchHooks Function()
+    >;
+typedef $$GoalsTableCreateCompanionBuilder = GoalsCompanion Function({
+  Value<int> id,
+  required String title,
+  required String icon,
+  required String area,
+  required String section,
+  Value<int> weekdaysMask,
+  Value<int> timesPerDay,
+  Value<bool> essential,
+  Value<String?> reminderTime,
+  required int sortOrder,
+  Value<String?> libraryId,
+  Value<DateTime?> archivedAt,
+  required DateTime createdAt,
+});
+typedef $$GoalsTableUpdateCompanionBuilder = GoalsCompanion Function({
+  Value<int> id,
+  Value<String> title,
+  Value<String> icon,
+  Value<String> area,
+  Value<String> section,
+  Value<int> weekdaysMask,
+  Value<int> timesPerDay,
+  Value<bool> essential,
+  Value<String?> reminderTime,
+  Value<int> sortOrder,
+  Value<String?> libraryId,
+  Value<DateTime?> archivedAt,
+  Value<DateTime> createdAt,
+});
+
+class $$GoalsTableFilterComposer extends Composer<_$AppDatabase, $GoalsTable> {
+  $$GoalsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get icon => $composableBuilder(
+    column: $table.icon,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get area => $composableBuilder(
+    column: $table.area,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get section => $composableBuilder(
+    column: $table.section,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get weekdaysMask => $composableBuilder(
+    column: $table.weekdaysMask,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get timesPerDay => $composableBuilder(
+    column: $table.timesPerDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get essential => $composableBuilder(
+    column: $table.essential,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reminderTime => $composableBuilder(
+    column: $table.reminderTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get libraryId => $composableBuilder(
+    column: $table.libraryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GoalsTableOrderingComposer
+    extends Composer<_$AppDatabase, $GoalsTable> {
+  $$GoalsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get icon => $composableBuilder(
+    column: $table.icon,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get area => $composableBuilder(
+    column: $table.area,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get section => $composableBuilder(
+    column: $table.section,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get weekdaysMask => $composableBuilder(
+    column: $table.weekdaysMask,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get timesPerDay => $composableBuilder(
+    column: $table.timesPerDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get essential => $composableBuilder(
+    column: $table.essential,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reminderTime => $composableBuilder(
+    column: $table.reminderTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get libraryId => $composableBuilder(
+    column: $table.libraryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GoalsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GoalsTable> {
+  $$GoalsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get icon =>
+      $composableBuilder(column: $table.icon, builder: (column) => column);
+
+  GeneratedColumn<String> get area =>
+      $composableBuilder(column: $table.area, builder: (column) => column);
+
+  GeneratedColumn<String> get section =>
+      $composableBuilder(column: $table.section, builder: (column) => column);
+
+  GeneratedColumn<int> get weekdaysMask => $composableBuilder(
+    column: $table.weekdaysMask,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get timesPerDay => $composableBuilder(
+    column: $table.timesPerDay,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get essential =>
+      $composableBuilder(column: $table.essential, builder: (column) => column);
+
+  GeneratedColumn<String> get reminderTime => $composableBuilder(
+    column: $table.reminderTime,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<String> get libraryId =>
+      $composableBuilder(column: $table.libraryId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$GoalsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GoalsTable,
+          Goal,
+          $$GoalsTableFilterComposer,
+          $$GoalsTableOrderingComposer,
+          $$GoalsTableAnnotationComposer,
+          $$GoalsTableCreateCompanionBuilder,
+          $$GoalsTableUpdateCompanionBuilder,
+          (Goal, BaseReferences<_$AppDatabase, $GoalsTable, Goal>),
+          Goal,
+          PrefetchHooks Function()
+        > {
+  $$GoalsTableTableManager(_$AppDatabase db, $GoalsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GoalsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GoalsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GoalsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> icon = const Value.absent(),
+                Value<String> area = const Value.absent(),
+                Value<String> section = const Value.absent(),
+                Value<int> weekdaysMask = const Value.absent(),
+                Value<int> timesPerDay = const Value.absent(),
+                Value<bool> essential = const Value.absent(),
+                Value<String?> reminderTime = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<String?> libraryId = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => GoalsCompanion(
+                id: id,
+                title: title,
+                icon: icon,
+                area: area,
+                section: section,
+                weekdaysMask: weekdaysMask,
+                timesPerDay: timesPerDay,
+                essential: essential,
+                reminderTime: reminderTime,
+                sortOrder: sortOrder,
+                libraryId: libraryId,
+                archivedAt: archivedAt,
+                createdAt: createdAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String title,
+                required String icon,
+                required String area,
+                required String section,
+                Value<int> weekdaysMask = const Value.absent(),
+                Value<int> timesPerDay = const Value.absent(),
+                Value<bool> essential = const Value.absent(),
+                Value<String?> reminderTime = const Value.absent(),
+                required int sortOrder,
+                Value<String?> libraryId = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
+                required DateTime createdAt,
+              }) => GoalsCompanion.insert(
+                id: id,
+                title: title,
+                icon: icon,
+                area: area,
+                section: section,
+                weekdaysMask: weekdaysMask,
+                timesPerDay: timesPerDay,
+                essential: essential,
+                reminderTime: reminderTime,
+                sortOrder: sortOrder,
+                libraryId: libraryId,
+                archivedAt: archivedAt,
+                createdAt: createdAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$GoalsTable, Goal>(table),
+                  BaseReferences<_$AppDatabase, $GoalsTable, Goal>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GoalsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GoalsTable,
+      Goal,
+      $$GoalsTableFilterComposer,
+      $$GoalsTableOrderingComposer,
+      $$GoalsTableAnnotationComposer,
+      $$GoalsTableCreateCompanionBuilder,
+      $$GoalsTableUpdateCompanionBuilder,
+      (Goal, BaseReferences<_$AppDatabase, $GoalsTable, Goal>),
+      Goal,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2116,4 +3702,8 @@ class $AppDatabaseManager {
   $$ProfilesTableTableManager get profiles =>
       $$ProfilesTableTableManager(_db, _db.profiles);
   $$PetsTableTableManager get pets => $$PetsTableTableManager(_db, _db.pets);
+  $$OnboardingAnswersTableTableManager get onboardingAnswers =>
+      $$OnboardingAnswersTableTableManager(_db, _db.onboardingAnswers);
+  $$GoalsTableTableManager get goals =>
+      $$GoalsTableTableManager(_db, _db.goals);
 }

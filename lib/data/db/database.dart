@@ -52,10 +52,60 @@ class Pets extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Profiles, Pets])
+/// One row per answered onboarding step, so the quiz can resume.
+class OnboardingAnswers extends Table {
+  TextColumn get questionId => text()();
+
+  /// JSON: a string or a list of strings.
+  TextColumn get value => text()();
+  DateTimeColumn get answeredAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {questionId};
+}
+
+/// The user's goals. Copied from library templates or typed by the user.
+class Goals extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get title => text()();
+
+  /// An emoji.
+  TextColumn get icon => text()();
+  TextColumn get area => text()();
+
+  /// A `GoalSection` id: `start_day`, `any_time` or `end_day`.
+  TextColumn get section => text()();
+
+  /// Bit 0 = Monday … bit 6 = Sunday; 127 = every day.
+  IntColumn get weekdaysMask => integer().withDefault(const Constant(127))();
+  IntColumn get timesPerDay => integer().withDefault(const Constant(1))();
+  BoolColumn get essential => boolean().withDefault(const Constant(false))();
+
+  /// `HH:mm`, or null for no reminder.
+  TextColumn get reminderTime => text().nullable()();
+  IntColumn get sortOrder => integer()();
+
+  /// The `GoalTemplate` id this came from, if any.
+  TextColumn get libraryId => text().nullable()();
+  DateTimeColumn get archivedAt => dateTime().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+}
+
+@DriftDatabase(tables: [Profiles, Pets, OnboardingAnswers, Goals])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(onboardingAnswers);
+            await m.createTable(goals);
+          }
+        },
+      );
 }
