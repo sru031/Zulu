@@ -14,16 +14,22 @@ class ZuluApp extends ConsumerStatefulWidget {
 }
 
 class _ZuluAppState extends ConsumerState<ZuluApp> {
-  late final GoRouter _router = buildRouter();
+  late final ValueNotifier<bool> _onboarded = ValueNotifier(ref.read(initialOnboardedProvider));
+  late final GoRouter _router = buildRouter(_onboarded);
 
   @override
   void dispose() {
     _router.dispose();
+    _onboarded.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(profileProvider, (previous, next) {
+      final done = next.value?.onboardingDoneAt != null;
+      if (next.hasValue && done != _onboarded.value) _onboarded.value = done;
+    });
     final theme = ref.watch(themeKitProvider).theme;
     return MaterialApp.router(
       title: theme.appName,

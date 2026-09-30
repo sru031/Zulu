@@ -50,3 +50,12 @@ final onboardingCompleterProvider = Provider<OnboardingCompleter>(
     clock: ref.watch(clockProvider),
   ),
 );
+
+/// The profile, kept up to date.
+final profileProvider = StreamProvider<Profile>((ref) => ref.watch(profileRepositoryProvider).watch());
+
+/// Whether onboarding was finished when the app started. Set by bootstrap.
+final initialOnboardedProvider = Provider<bool>((ref) => false);
+
+/// The hatched pet, or null before hatching.
+final petProvider = StreamProvider<Pet?>((ref) => ref.watch(petRepositoryProvider).watch());

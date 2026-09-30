@@ -76,9 +76,9 @@ class _PetSays extends StatelessWidget {
 
 /// Scrollable content with a pinned action area at the bottom.
 class _StepLayout extends StatelessWidget {
-  const _StepLayout({required this.children, this.actions = const []});
+  const _StepLayout({required this.body, this.actions = const []});
 
-  final List<Widget> children;
+  final List<Widget> body;
   final List<Widget> actions;
 
   @override
@@ -86,7 +86,7 @@ class _StepLayout extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 20), children: children),
+          child: ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 20), children: body),
         ),
         if (actions.isNotEmpty)
           Padding(
@@ -108,7 +108,7 @@ class _TalkStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _StepLayout(
-        children: [const SizedBox(height: 40), _PetSays(pose: step.petPose, text: prompt, petSize: 180)],
+        body: [const SizedBox(height: 40), _PetSays(pose: step.petPose, text: prompt, petSize: 180)],
         actions: [FilledButton(onPressed: () => onAnswer('ok'), child: Text(fillTemplate(step.button ?? 'Continue', vars)))],
       );
 }
@@ -193,7 +193,7 @@ class _SingleStepState extends State<_SingleStep> {
 
   @override
   Widget build(BuildContext context) => _StepLayout(
-        children: [
+        body: [
           _PetSays(pose: widget.step.petPose, text: widget.prompt),
           const SizedBox(height: 20),
           for (final o in widget.step.options)
@@ -222,7 +222,7 @@ class _MultiStepState extends State<_MultiStep> {
   Widget build(BuildContext context) {
     final enough = _selected.length >= widget.step.minSelect;
     return _StepLayout(
-      children: [
+      body: [
         _PetSays(pose: widget.step.petPose, text: widget.prompt),
         const SizedBox(height: 20),
         for (final o in widget.step.options)
@@ -279,7 +279,7 @@ class _TextStepState extends State<_TextStep> {
   Widget build(BuildContext context) {
     final value = _controller.text.trim();
     return _StepLayout(
-      children: [
+      body: [
         _PetSays(pose: widget.step.petPose, text: widget.prompt),
         const SizedBox(height: 20),
         TextField(
@@ -336,7 +336,7 @@ class _TimeStepState extends State<_TimeStep> {
 
   @override
   Widget build(BuildContext context) => _StepLayout(
-        children: [
+        body: [
           _PetSays(pose: widget.step.petPose, text: widget.prompt),
           const SizedBox(height: 28),
           Center(child: Text(_time.format(context), style: Theme.of(context).textTheme.displaySmall)),
@@ -366,7 +366,7 @@ class _EggStepState extends ConsumerState<_EggStep> {
     final eggs = ref.watch(themeKitProvider).pet.eggs;
     final scheme = Theme.of(context).colorScheme;
     return _StepLayout(
-      children: [
+      body: [
         Text(widget.prompt, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 24),
         Wrap(
@@ -434,7 +434,7 @@ class _HatchStepState extends State<_HatchStep> {
 
   @override
   Widget build(BuildContext context) => _StepLayout(
-        children: [
+        body: [
           const SizedBox(height: 40),
           Text(widget.prompt, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 24),
@@ -479,7 +479,7 @@ class _PermissionStepState extends ConsumerState<_PermissionStep> {
   Widget build(BuildContext context) {
     final preview = widget.step.preview;
     return _StepLayout(
-      children: [
+      body: [
         _PetSays(pose: widget.step.petPose, text: widget.prompt),
         if (preview != null) ...[
           const SizedBox(height: 20),

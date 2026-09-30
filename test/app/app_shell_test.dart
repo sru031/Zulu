@@ -19,18 +19,28 @@ void main() {
     kit = await loadThemeKit(readFile);
   });
 
+  late AppDatabase db;
+
   Future<void> pumpApp(WidgetTester tester) async {
-    final db = AppDatabase(NativeDatabase.memory());
-    addTearDown(db.close);
+    db = AppDatabase(NativeDatabase.memory());
     await tester.pumpWidget(ProviderScope(
       overrides: [
         databaseProvider.overrideWithValue(db),
         contentProvider.overrideWithValue(content),
         themeKitProvider.overrideWithValue(kit),
+        initialOnboardedProvider.overrideWithValue(true),
       ],
       child: const ZuluApp(),
     ));
     await tester.pumpAndSettle();
+  }
+
+  /// Unmounts the app and lets drift's stream-cleanup timers fire before
+  /// closing the database, so no timer is left pending.
+  Future<void> finish(WidgetTester tester) async {
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 1));
+    await tester.runAsync(db.close);
   }
 
   testWidgets('boots into Home with five tabs', (tester) async {
@@ -40,6 +50,7 @@ void main() {
       expect(find.text(label), findsWidgets, reason: label);
     }
     expect(find.textContaining('Welcome to Zulu'), findsOneWidget);
+    await finish(tester);
   });
 
   testWidgets('switches tabs', (tester) async {
@@ -50,5 +61,6 @@ void main() {
     await tester.tap(find.text('Me'));
     await tester.pumpAndSettle();
     expect(find.text("Your pet's profile and settings will live here."), findsOneWidget);
+    await finish(tester);
   });
 }

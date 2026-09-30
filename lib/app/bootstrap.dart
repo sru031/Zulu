@@ -31,11 +31,12 @@ Future<List<Override>> bootstrap() async {
   }
 
   final db = AppDatabase(openZuluDatabase());
-  await ProfileRepository(db, const SystemClock()).ensure();
+  final profile = await ProfileRepository(db, const SystemClock()).ensure();
 
   return [
     databaseProvider.overrideWithValue(db),
     contentProvider.overrideWithValue(content),
     themeKitProvider.overrideWithValue(theme),
+    initialOnboardedProvider.overrideWithValue(profile.onboardingDoneAt != null),
   ];
 }
