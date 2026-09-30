@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zulu/content/asset_validator.dart';
 import 'package:zulu/content/content_bundle.dart';
+import 'package:zulu/content/json_reader.dart';
+import 'package:zulu/content/onboarding_script.dart';
 import 'package:zulu/theme_kit/item_catalog.dart';
 import 'package:zulu/theme_kit/theme_kit.dart';
 
@@ -82,5 +85,21 @@ void main() {
   test('readPngSize reads the header of a real PNG', () {
     expect(readPngSize('assets/theme/pet/baby/idle.png'), (width: 512, height: 512));
     expect(readPngSize('assets/content/game_rules.json'), isNull);
+  });
+
+  test('flags a plan rule that names an unknown goal', () {
+    final json = jsonDecode(File(OnboardingScript.fileName).readAsStringSync()) as Map<String, Object?>;
+    (json['planRules']! as List<Object?>).add({
+      'when': {'question': 'get_up', 'equals': 'hard'},
+      'add': ['fly_to_the_moon'],
+      'reason': 'why not',
+    });
+    final broken = ContentBundle(
+      rules: content.rules,
+      goals: content.goals,
+      onboarding: OnboardingScript.fromJson(JsonReader('onboarding.json', json)),
+    );
+    final issues = AssetValidator(exists: files.contains).validate(theme: kit, content: broken);
+    expect(issues.where((i) => i.isError).map((i) => i.message), contains(contains('fly_to_the_moon')));
   });
 }

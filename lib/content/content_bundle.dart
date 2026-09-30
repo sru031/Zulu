@@ -1,14 +1,15 @@
 import '../domain/rules/game_rules.dart';
 import 'goal_library.dart';
 import 'json_reader.dart';
+import 'onboarding_script.dart';
 
-/// All bundled content, loaded once at startup. Later plans add onboarding,
-/// dialogue, stories and the rest.
+/// All bundled content, loaded once at startup.
 class ContentBundle {
-  const ContentBundle({required this.rules, required this.goals});
+  const ContentBundle({required this.rules, required this.goals, required this.onboarding});
 
   final GameRules rules;
   final GoalLibrary goals;
+  final OnboardingScript onboarding;
 }
 
 Future<ContentBundle> loadContent(ReadText read) async {
@@ -16,5 +17,6 @@ Future<ContentBundle> loadContent(ReadText read) async {
   return ContentBundle(
     rules: GameRules.fromJson(await open(GameRules.fileName)),
     goals: GoalLibrary.fromJson(await open(GoalLibrary.fileName)),
+    onboarding: OnboardingScript.fromJson(await open(OnboardingScript.fileName)),
   );
 }

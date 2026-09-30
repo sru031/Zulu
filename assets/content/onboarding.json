@@ -1,0 +1,171 @@
+{
+  "sections": [
+    { "id": "about_you", "label": "About you" },
+    { "id": "energy", "label": "Energy" },
+    { "id": "life", "label": "How's life" },
+    { "id": "support", "label": "Support" }
+  ],
+  "foundationGoals": ["get_out_of_bed", "drink_water"],
+  "foundationReason": "a gentle start for any day",
+  "focusQuestion": "focus_areas",
+  "steps": [
+    { "id": "welcome", "type": "talk", "petPose": "hatch", "prompt": "Hi there! Someone small is waiting to meet you.", "button": "Hatch a new pet" },
+    { "id": "egg", "type": "egg", "prompt": "Pick an egg. Whoever's inside will be your companion.", "saveTo": "pet.eggColor", "button": "Hatch this egg" },
+    { "id": "hatch", "type": "hatch", "petPose": "hatch", "prompt": "It's hatching!", "button": "Say hello" },
+    { "id": "pet_name", "type": "text", "petPose": "happy", "prompt": "Hello! I'm brand new. What would you like to call me?", "placeholder": "Pet name", "saveTo": "pet.name",
+      "suggestions": ["Pip", "Mochi", "Bean", "Sunny", "Juniper", "Biscuit", "Pebble", "Clover"] },
+    { "id": "pet_pronouns", "type": "single", "prompt": "Which words should we use for {petName}?", "saveTo": "pet.pronouns",
+      "options": [ { "id": "she", "label": "She / her" }, { "id": "he", "label": "He / him" }, { "id": "they", "label": "They / them" } ] },
+    { "id": "pet_trait", "type": "single", "prompt": "What does {petName} care about most?", "saveTo": "pet.trait",
+      "options": [
+        { "id": "curiosity", "label": "Curiosity", "icon": "🔎" },
+        { "id": "resilience", "label": "Resilience", "icon": "🌱" },
+        { "id": "compassion", "label": "Compassion", "icon": "💗" },
+        { "id": "logic", "label": "Logic", "icon": "🧩" },
+        { "id": "confidence", "label": "Confidence", "icon": "⭐" },
+        { "id": "calm", "label": "Calm", "icon": "🌊" }
+      ] },
+    { "id": "user_name", "type": "text", "petPose": "happy", "prompt": "Thanks for hatching me! What should I call you?", "placeholder": "Your name", "skippable": true, "saveTo": "profile.userName" },
+    { "id": "self_care", "type": "talk_choice", "prompt": "Nice to meet you, {userName}! I'm a self-care pet. What does self-care mean to you?",
+      "options": [
+        { "id": "body_mind", "label": "Looking after my body, mind and people", "trait": "compassion" },
+        { "id": "hard_days", "label": "Doing what I can, even on hard days", "trait": "resilience" }
+      ] },
+    { "id": "together", "type": "talk", "petPose": "celebrate", "prompt": "Then let's look after each other. When you care for yourself, you care for me too.", "button": "Let's do it" },
+    { "id": "reminders", "type": "permission", "prompt": "Can I send you a little nudge now and then? Never more than a few a day.", "preview": "{petName}: Sip of water? I'll have one too." },
+    { "id": "learn", "type": "talk", "petPose": "happy", "prompt": "Let's get to know each other, so I can suggest goals that fit your life.", "button": "Okay" },
+
+    { "id": "wake_time", "type": "time", "section": "about_you", "prompt": "When do you usually wake up?", "default": "07:30", "saveTo": "profile.wakeTime" },
+    { "id": "bed_time", "type": "time", "section": "about_you", "prompt": "And when do you usually go to bed?", "default": "23:00", "saveTo": "profile.bedTime" },
+    { "id": "tried_apps", "type": "single", "section": "about_you", "prompt": "Have you tried a habit or self-care app before?",
+      "options": [ { "id": "never", "label": "Never" }, { "id": "didnt_stick", "label": "Tried one, it didn't stick" }, { "id": "use_now", "label": "I use one now" } ] },
+
+    { "id": "sleep_hours", "type": "single", "section": "energy", "prompt": "How much sleep do you usually get?",
+      "options": [
+        { "id": "under_5", "label": "Under 5 hours", "icon": "😴" },
+        { "id": "five_seven", "label": "5–7 hours", "icon": "🛏️" },
+        { "id": "seven_nine", "label": "7–9 hours", "icon": "🌙" },
+        { "id": "nine_plus", "label": "More than 9 hours", "icon": "☀️" }
+      ] },
+    { "id": "get_up", "type": "single", "section": "energy", "prompt": "How easy is it to get up in the morning?",
+      "options": [ { "id": "easy", "label": "Pretty easy", "icon": "🐬" }, { "id": "depends", "label": "Depends on the day", "icon": "🌤️" }, { "id": "hard", "label": "Hard most days", "icon": "🧸" } ] },
+    { "id": "movement", "type": "single", "section": "energy", "prompt": "How much do you move in a normal day?",
+      "options": [
+        { "id": "a_lot", "label": "A lot", "icon": "🏃" },
+        { "id": "some", "label": "Some", "icon": "🚶" },
+        { "id": "want_more", "label": "Not much, and I'd like more", "icon": "🪑" },
+        { "id": "limited", "label": "My body limits how much I move", "icon": "🌻" }
+      ] },
+
+    { "id": "overwhelm", "type": "single", "section": "life", "prompt": "How often does life feel like too much?",
+      "options": [ { "id": "most_days", "label": "Most days", "icon": "😣" }, { "id": "some_days", "label": "Some days", "icon": "😕" }, { "id": "rarely", "label": "Rarely", "icon": "😌" } ] },
+    { "id": "lean_on", "type": "single", "section": "life", "prompt": "Who can you lean on when things are hard?",
+      "options": [
+        { "id": "few", "label": "A few people", "icon": "🌳" },
+        { "id": "one", "label": "One person", "icon": "🌿" },
+        { "id": "just_me", "label": "Mostly just me", "icon": "🍃" },
+        { "id": "prefer_not", "label": "Prefer not to say" }
+      ] },
+    { "id": "routine_feel", "type": "single", "section": "life", "prompt": "How do you feel about your routine right now?",
+      "options": [ { "id": "good", "label": "Pretty good", "icon": "🙂" }, { "id": "small", "label": "I'd like small changes", "icon": "🌱" }, { "id": "big", "label": "I'd like a big change", "icon": "🚀" } ] },
+
+    { "id": "hard_lately", "type": "multi", "section": "support", "prompt": "What's been hard lately? Pick any.",
+      "options": [
+        { "id": "focus", "label": "Staying focused" },
+        { "id": "low_energy", "label": "Low energy" },
+        { "id": "feeling_down", "label": "Feeling down" },
+        { "id": "stress", "label": "Stress or worry" },
+        { "id": "sleep", "label": "Sleep" },
+        { "id": "lonely", "label": "Feeling lonely" },
+        { "id": "basics", "label": "Keeping up with basics" },
+        { "id": "kindness", "label": "Being kind to myself" },
+        { "id": "nothing", "label": "Nothing in particular" },
+        { "id": "prefer_not", "label": "Prefer not to say" }
+      ] },
+    { "id": "focus_areas", "type": "multi", "section": "support", "prompt": "What would you like help with?",
+      "options": [
+        { "id": "calmer_mind", "label": "A calmer mind", "icon": "🌿" },
+        { "id": "rest_sleep", "label": "Rest and sleep", "icon": "🌙" },
+        { "id": "move_more", "label": "Move more", "icon": "💫" },
+        { "id": "eat_well", "label": "Eat well", "icon": "🥣" },
+        { "id": "feel_fresh", "label": "Feel fresh", "icon": "🫧" },
+        { "id": "focus", "label": "Focus and get things done", "icon": "🎯" },
+        { "id": "kinder_to_myself", "label": "Be kinder to myself", "icon": "💛" },
+        { "id": "notice_good", "label": "Notice the good", "icon": "🌸" },
+        { "id": "connect", "label": "Connect with people", "icon": "💬" },
+        { "id": "steady_routine", "label": "A steady routine", "icon": "🌤️" }
+      ] },
+
+    { "id": "calm_pileup", "type": "multi", "section": "support", "prompt": "What tends to pile up on you?", "showIf": { "question": "focus_areas", "includes": "calmer_mind" },
+      "options": [
+        { "id": "work_school", "label": "Work or school" }, { "id": "relationships", "label": "Relationships" }, { "id": "money", "label": "Money" },
+        { "id": "health", "label": "Health" }, { "id": "too_much", "label": "Too much on my plate" }, { "id": "changes", "label": "Big changes" }, { "id": "not_sure", "label": "Not sure" }
+      ] },
+    { "id": "rest_blocker", "type": "multi", "section": "support", "prompt": "What gets in the way of rest?", "showIf": { "question": "focus_areas", "includes": "rest_sleep" },
+      "options": [
+        { "id": "screens", "label": "Screens" }, { "id": "racing_thoughts", "label": "Racing thoughts" }, { "id": "schedule", "label": "A changing schedule" },
+        { "id": "noise", "label": "Noise or my surroundings" }, { "id": "not_sure", "label": "Not sure" }
+      ] },
+    { "id": "move_blocker", "type": "multi", "section": "support", "prompt": "What makes moving hard?", "showIf": { "question": "focus_areas", "includes": "move_more" },
+      "options": [
+        { "id": "no_time", "label": "No time" }, { "id": "low_energy", "label": "Low energy" }, { "id": "dont_enjoy", "label": "I don't enjoy it" },
+        { "id": "pain", "label": "Pain or physical limits" }, { "id": "dont_know", "label": "I don't know where to start" }, { "id": "weather", "label": "The weather" }
+      ] },
+    { "id": "food_help", "type": "multi", "section": "support", "prompt": "What would help most with food?", "showIf": { "question": "focus_areas", "includes": "eat_well" },
+      "options": [
+        { "id": "regular_meals", "label": "Regular meals" }, { "id": "water", "label": "More water" }, { "id": "fruit_veg", "label": "More fruit and veg" },
+        { "id": "cooking", "label": "Cooking more" }, { "id": "on_the_go", "label": "Fewer meals on the go" }
+      ] },
+    { "id": "fresh_keep", "type": "multi", "section": "support", "prompt": "Which would feel good to keep up?", "showIf": { "question": "focus_areas", "includes": "feel_fresh" },
+      "options": [
+        { "id": "teeth", "label": "Teeth" }, { "id": "showers", "label": "Showers" }, { "id": "skincare", "label": "Skincare" },
+        { "id": "clothes", "label": "Clean clothes" }, { "id": "tidy", "label": "A tidy space" }
+      ] },
+    { "id": "focus_blocker", "type": "multi", "section": "support", "prompt": "What pulls your focus away?", "showIf": { "question": "focus_areas", "includes": "focus" },
+      "options": [
+        { "id": "phone", "label": "My phone" }, { "id": "too_many", "label": "Too many tasks" }, { "id": "hard_to_start", "label": "Starting is hard" },
+        { "id": "tired", "label": "Tiredness" }, { "id": "noise", "label": "Noise" }
+      ] },
+    { "id": "kind_when", "type": "single", "section": "support", "prompt": "When something goes wrong, you usually…", "showIf": { "question": "focus_areas", "includes": "kinder_to_myself" },
+      "options": [ { "id": "hard_on_myself", "label": "Am hard on myself" }, { "id": "shrug", "label": "Shrug it off" }, { "id": "depends", "label": "It depends" } ] },
+    { "id": "good_when", "type": "single", "section": "support", "prompt": "When could you pause for a good moment?", "showIf": { "question": "focus_areas", "includes": "notice_good" },
+      "options": [ { "id": "morning", "label": "Morning" }, { "id": "midday", "label": "Midday" }, { "id": "evening", "label": "Evening" }, { "id": "whenever", "label": "Whenever" } ] },
+    { "id": "connect_doable", "type": "multi", "section": "support", "prompt": "What sounds doable this week?", "showIf": { "question": "focus_areas", "includes": "connect" },
+      "options": [
+        { "id": "message_friend", "label": "Message a friend" }, { "id": "call_family", "label": "Call family" }, { "id": "see_someone", "label": "See someone" },
+        { "id": "join", "label": "Join something" }, { "id": "not_yet", "label": "Not yet" }
+      ] },
+    { "id": "routine_part", "type": "single", "section": "support", "prompt": "Which part of the day needs the most help?", "showIf": { "question": "focus_areas", "includes": "steady_routine" },
+      "options": [ { "id": "morning", "label": "Morning" }, { "id": "afternoon", "label": "Afternoon" }, { "id": "evening", "label": "Evening" }, { "id": "bedtime", "label": "Bedtime" } ] }
+  ],
+  "planRules": [
+    { "when": { "question": "hard_lately", "includes": "basics" }, "add": ["brush_teeth_am"], "reason": "you said the basics have been tough" },
+    { "when": { "question": "hard_lately", "includes": "stress" }, "add": ["three_breaths"], "reason": "you mentioned stress and worry" },
+    { "when": { "question": "hard_lately", "includes": "feeling_down" }, "add": ["kind_word"], "reason": "you've been feeling down" },
+    { "when": { "question": "hard_lately", "includes": "lonely" }, "add": ["message_friend"], "reason": "you said you've felt lonely" },
+    { "when": { "question": "hard_lately", "includes": "focus" }, "add": ["one_small_task"], "reason": "you said focus has been hard" },
+    { "when": { "question": "hard_lately", "includes": "sleep" }, "add": ["wind_down_10"], "reason": "you said sleep has been hard" },
+    { "when": { "question": "get_up", "equals": "hard" }, "add": ["daylight"], "reason": "you said mornings can be hard" },
+    { "when": { "question": "sleep_hours", "equals": "under_5" }, "add": ["wind_down_10"], "reason": "you told me sleep's been short" },
+    { "when": { "question": "movement", "equals": "limited" }, "add": ["move_your_way"], "reason": "moving should fit your body" },
+    { "when": { "question": "movement", "equals": "want_more" }, "add": ["short_walk"], "reason": "you'd like to move more" },
+    { "when": { "question": "overwhelm", "equals": "most_days" }, "add": ["quiet_minute"], "reason": "you said life often feels like too much" },
+    { "when": { "question": "lean_on", "equals": "just_me" }, "add": ["say_hi"], "reason": "a little connection can go a long way" },
+    { "when": { "question": "calm_pileup", "includes": "too_much" }, "add": ["top_three"], "reason": "you said there's a lot on your plate" },
+    { "when": { "question": "rest_blocker", "includes": "screens" }, "add": ["phone_away_bed"], "reason": "you said screens get in the way of rest" },
+    { "when": { "question": "rest_blocker", "includes": "racing_thoughts" }, "add": ["worry_note"], "reason": "you said racing thoughts keep you up" },
+    { "when": { "question": "move_blocker", "includes": "no_time" }, "add": ["stretch_2min"], "reason": "you said time is tight" },
+    { "when": { "question": "move_blocker", "includes": "pain" }, "add": ["move_your_way"], "reason": "you mentioned pain or physical limits" },
+    { "when": { "question": "move_blocker", "includes": "low_energy" }, "add": ["one_song_move"], "reason": "you said energy is low" },
+    { "when": { "question": "food_help", "includes": "regular_meals" }, "add": ["pause_for_meal"], "reason": "you'd like more regular meals" },
+    { "when": { "question": "food_help", "includes": "fruit_veg" }, "add": ["fruit_or_veg"], "reason": "you'd like more fruit and veg" },
+    { "when": { "question": "fresh_keep", "includes": "showers" }, "add": ["shower"], "reason": "you want to keep up with showers" },
+    { "when": { "question": "fresh_keep", "includes": "skincare" }, "add": ["wash_face"], "reason": "you want to keep up with skincare" },
+    { "when": { "question": "focus_blocker", "includes": "phone" }, "add": ["phone_away_focus"], "reason": "you said your phone pulls you away" },
+    { "when": { "question": "focus_blocker", "includes": "hard_to_start" }, "add": ["start_messy"], "reason": "you said starting is the hard part" },
+    { "when": { "question": "kind_when", "equals": "hard_on_myself" }, "add": ["let_it_go"], "reason": "you said you can be hard on yourself" },
+    { "when": { "question": "good_when", "equals": "evening" }, "add": ["one_good_thing"], "reason": "evenings suit you for a good moment" },
+    { "when": { "question": "connect_doable", "includes": "call_family" }, "add": ["call_someone"], "reason": "you'd like to call family" },
+    { "when": { "question": "routine_part", "equals": "bedtime" }, "add": ["ready_for_tomorrow"], "reason": "you said bedtime needs the most help" }
+  ]
+}

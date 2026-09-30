@@ -9,6 +9,7 @@ import '../theme_kit/theme_kit.dart';
 import '../theme_kit/theme_manifest.dart';
 import 'content_bundle.dart';
 import 'goal_library.dart';
+import 'onboarding_script.dart';
 
 class ValidationIssue {
   const ValidationIssue.error(this.where, this.message) : isError = true;
@@ -108,6 +109,37 @@ class AssetValidator {
       if (unknown.isNotEmpty) {
         issues.add(ValidationIssue.error(
           '${GoalLibrary.fileName} "${goal.id}"',
+          'unknown placeholders ${unknown.map((u) => '{$u}').join(', ')}',
+        ));
+      }
+    }
+    final script = content.onboarding;
+    final goalIds = [...script.foundationGoals, for (final rule in script.planRules) ...rule.add];
+    for (final id in goalIds) {
+      if (content.goals.byId(id) == null) {
+        issues.add(ValidationIssue.error(OnboardingScript.fileName, 'unknown goal "$id"'));
+      }
+    }
+    final essentialFoundation = script.foundationGoals.where((id) => content.goals.byId(id)?.essential ?? false).length;
+    if (essentialFoundation < 2) {
+      issues.add(const ValidationIssue.error(
+        OnboardingScript.fileName,
+        'foundationGoals need at least 2 essential goals, for low-energy days',
+      ));
+    }
+    final focusIds = {for (final o in script.step(script.focusQuestion)!.options) o.id};
+    final areaIds = {for (final a in content.goals.areas) a.id};
+    if (focusIds.length != areaIds.length || !focusIds.containsAll(areaIds)) {
+      issues.add(ValidationIssue.error(
+        OnboardingScript.fileName,
+        'the options of "${script.focusQuestion}" must match the goal library areas exactly',
+      ));
+    }
+    for (final (where, text) in script.texts) {
+      final unknown = unknownPlaceholders(text);
+      if (unknown.isNotEmpty) {
+        issues.add(ValidationIssue.error(
+          '${OnboardingScript.fileName} $where',
           'unknown placeholders ${unknown.map((u) => '{$u}').join(', ')}',
         ));
       }
