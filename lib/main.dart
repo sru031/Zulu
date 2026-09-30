@@ -1,15 +1,18 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-void main() => runApp(const ZuluPlaceholderApp());
+import 'app/app.dart';
+import 'app/bootstrap.dart';
+import 'app/error_handling.dart';
 
-/// Temporary app used until the real shell lands in Task 12.
-class ZuluPlaceholderApp extends StatelessWidget {
-  const ZuluPlaceholderApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Zulu'))),
-    );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  installErrorHandlers();
+  try {
+    final overrides = await bootstrap();
+    runApp(ProviderScope(overrides: overrides, child: const ZuluApp()));
+  } catch (error, stack) {
+    logError(error, stack);
+    runApp(StartupErrorApp(error: error));
   }
 }
