@@ -12,16 +12,12 @@ import 'repositories/profile_repository.dart';
 /// basics (marking onboarding done) and the accepted plan's goals.
 class OnboardingCompleter {
   OnboardingCompleter({
-    required AppDatabase db,
-    required ProfileRepository profiles,
-    required PetRepository pets,
-    required GoalRepository goals,
-    required Clock clock,
-  })  : _db = db,
-        _profiles = profiles,
-        _pets = pets,
-        _goals = goals,
-        _clock = clock;
+    required this._db,
+    required this._profiles,
+    required this._pets,
+    required this._goals,
+    required this._clock,
+  });
 
   final AppDatabase _db;
   final ProfileRepository _profiles;
