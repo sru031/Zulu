@@ -1,0 +1,85 @@
+{
+  "areas": [
+    { "id": "calmer_mind", "label": "Calmer mind", "icon": "🌿", "trait": "calm" },
+    { "id": "rest_sleep", "label": "Rest and sleep", "icon": "🌙", "trait": "calm" },
+    { "id": "move_more", "label": "Move more", "icon": "💫", "trait": "confidence" },
+    { "id": "eat_well", "label": "Eat well", "icon": "🥣", "trait": "resilience" },
+    { "id": "feel_fresh", "label": "Feel fresh", "icon": "🫧", "trait": "confidence" },
+    { "id": "focus", "label": "Focus and get things done", "icon": "🎯", "trait": "logic" },
+    { "id": "kinder_to_myself", "label": "Be kinder to myself", "icon": "💛", "trait": "compassion" },
+    { "id": "notice_good", "label": "Notice the good", "icon": "🌸", "trait": "curiosity" },
+    { "id": "connect", "label": "Connect with people", "icon": "💬", "trait": "compassion" },
+    { "id": "steady_routine", "label": "A steady routine", "icon": "🌤️", "trait": "resilience" }
+  ],
+  "goals": [
+    { "id": "three_breaths", "title": "Take 3 slow breaths", "icon": "🌬️", "area": "calmer_mind", "section": "any_time", "essential": true, "starter": true },
+    { "id": "name_feeling", "title": "Name how you feel", "icon": "🏷️", "area": "calmer_mind", "section": "any_time", "starter": true },
+    { "id": "quiet_minute", "title": "Sit quietly for 1 minute", "icon": "🪷", "area": "calmer_mind", "section": "any_time", "starter": true },
+    { "id": "worry_note", "title": "Write down one worry", "icon": "📝", "area": "calmer_mind", "section": "any_time" },
+    { "id": "fresh_air", "title": "Get some fresh air", "icon": "🍃", "area": "calmer_mind", "section": "any_time" },
+    { "id": "calm_corner", "title": "Visit the calm corner", "icon": "🫧", "area": "calmer_mind", "section": "any_time" },
+
+    { "id": "wind_down_10", "title": "Wind down for 10 minutes before bed", "icon": "🌙", "area": "rest_sleep", "section": "end_day", "starter": true },
+    { "id": "phone_away_bed", "title": "Put the phone away before sleep", "icon": "📵", "area": "rest_sleep", "section": "end_day", "starter": true },
+    { "id": "rest_break", "title": "Take a short rest", "icon": "😌", "area": "rest_sleep", "section": "any_time", "essential": true },
+    { "id": "usual_bedtime", "title": "Head to bed at your usual time", "icon": "🛏️", "area": "rest_sleep", "section": "end_day" },
+    { "id": "daylight", "title": "Let some daylight in", "icon": "☀️", "area": "rest_sleep", "section": "start_day" },
+    { "id": "caffeine_early", "title": "Keep caffeine to the morning", "icon": "☕", "area": "rest_sleep", "section": "any_time" },
+
+    { "id": "stretch_2min", "title": "Gentle stretch for 2 minutes", "icon": "🧘", "area": "move_more", "section": "any_time", "essential": true, "starter": true },
+    { "id": "short_walk", "title": "Take a short walk", "icon": "🚶", "area": "move_more", "section": "any_time", "starter": true, "tags": ["walking"] },
+    { "id": "one_song_move", "title": "Move to one song", "icon": "🎵", "area": "move_more", "section": "any_time", "starter": true },
+    { "id": "change_position", "title": "Change position and move a little", "icon": "🔄", "area": "move_more", "section": "any_time" },
+    { "id": "move_your_way", "title": "Move in a way that feels good", "icon": "💫", "area": "move_more", "section": "any_time" },
+    { "id": "shoulder_rolls", "title": "Roll your shoulders", "icon": "🙆", "area": "move_more", "section": "any_time" },
+
+    { "id": "drink_water", "title": "Drink a glass of water", "icon": "💧", "area": "eat_well", "section": "any_time", "essential": true, "starter": true },
+    { "id": "morning_bite", "title": "Eat something in the morning", "icon": "🥣", "area": "eat_well", "section": "start_day", "starter": true },
+    { "id": "pause_for_meal", "title": "Pause for a meal", "icon": "🍽️", "area": "eat_well", "section": "any_time", "starter": true },
+    { "id": "fruit_or_veg", "title": "Add a fruit or veggie to a meal", "icon": "🍎", "area": "eat_well", "section": "any_time" },
+    { "id": "cook_simple", "title": "Make yourself something simple", "icon": "🍳", "area": "eat_well", "section": "any_time" },
+    { "id": "water_nearby", "title": "Keep water nearby", "icon": "🫗", "area": "eat_well", "section": "start_day" },
+
+    { "id": "brush_teeth_am", "title": "Brush your teeth", "icon": "🪥", "area": "feel_fresh", "section": "start_day", "essential": true, "starter": true },
+    { "id": "wash_face", "title": "Wash your face", "icon": "🧼", "area": "feel_fresh", "section": "start_day", "starter": true },
+    { "id": "shower", "title": "Take a shower", "icon": "🚿", "area": "feel_fresh", "section": "any_time", "starter": true },
+    { "id": "brush_teeth_pm", "title": "Brush your teeth before bed", "icon": "🦷", "area": "feel_fresh", "section": "end_day" },
+    { "id": "fresh_clothes", "title": "Put on fresh clothes", "icon": "👕", "area": "feel_fresh", "section": "start_day" },
+    { "id": "tidy_one_thing", "title": "Tidy one small thing", "icon": "🧺", "area": "feel_fresh", "section": "any_time" },
+
+    { "id": "one_small_task", "title": "Do one small task", "icon": "✅", "area": "focus", "section": "any_time", "essential": true, "starter": true },
+    { "id": "top_three", "title": "Pick today's top 3", "icon": "🗒️", "area": "focus", "section": "start_day", "starter": true },
+    { "id": "focus_10", "title": "Focus for 10 minutes", "icon": "⏱️", "area": "focus", "section": "any_time", "starter": true },
+    { "id": "phone_away_focus", "title": "Phone away while you focus", "icon": "📱", "area": "focus", "section": "any_time" },
+    { "id": "tiny_todo", "title": "Clear one tiny to-do", "icon": "📥", "area": "focus", "section": "any_time" },
+    { "id": "start_messy", "title": "Start something, even messily", "icon": "🚀", "area": "focus", "section": "any_time" },
+
+    { "id": "kind_word", "title": "Say something kind to yourself", "icon": "💛", "area": "kinder_to_myself", "section": "any_time", "starter": true },
+    { "id": "did_well", "title": "Notice one thing you did well", "icon": "🏅", "area": "kinder_to_myself", "section": "end_day", "starter": true },
+    { "id": "happy_thing", "title": "Do one thing that makes you happy", "icon": "😊", "area": "kinder_to_myself", "section": "any_time", "starter": true },
+    { "id": "guilt_free_break", "title": "Take a break without guilt", "icon": "🛋️", "area": "kinder_to_myself", "section": "any_time" },
+    { "id": "let_it_go", "title": "Let one mistake go", "icon": "🕊️", "area": "kinder_to_myself", "section": "any_time" },
+    { "id": "just_be", "title": "Just be today", "icon": "🌱", "area": "kinder_to_myself", "section": "any_time", "essential": true, "tags": ["survival"] },
+
+    { "id": "one_good_thing", "title": "Write one good thing", "icon": "🙏", "area": "notice_good", "section": "end_day", "starter": true },
+    { "id": "something_beautiful", "title": "Notice something beautiful", "icon": "🌸", "area": "notice_good", "section": "any_time", "starter": true },
+    { "id": "slow_moment", "title": "Enjoy one moment slowly", "icon": "🍵", "area": "notice_good", "section": "any_time", "starter": true },
+    { "id": "nice_photo", "title": "Take a photo of something nice", "icon": "📷", "area": "notice_good", "section": "any_time" },
+    { "id": "thank_someone", "title": "Thank someone", "icon": "💌", "area": "notice_good", "section": "any_time" },
+    { "id": "favorite_song", "title": "Listen to a song you love", "icon": "🎧", "area": "notice_good", "section": "any_time" },
+
+    { "id": "message_friend", "title": "Message a friend", "icon": "💬", "area": "connect", "section": "any_time", "starter": true },
+    { "id": "call_someone", "title": "Call someone you care about", "icon": "📞", "area": "connect", "section": "any_time", "starter": true },
+    { "id": "say_hi", "title": "Say hi to someone", "icon": "👋", "area": "connect", "section": "any_time", "starter": true },
+    { "id": "share_snack", "title": "Share a meal or snack with someone", "icon": "🥪", "area": "connect", "section": "any_time" },
+    { "id": "reply_message", "title": "Reply to a message you've been meaning to", "icon": "📨", "area": "connect", "section": "any_time" },
+    { "id": "plan_time", "title": "Plan time with someone", "icon": "📅", "area": "connect", "section": "any_time" },
+
+    { "id": "get_out_of_bed", "title": "Get out of bed", "icon": "🌅", "area": "steady_routine", "section": "start_day", "essential": true, "starter": true, "tags": ["survival"] },
+    { "id": "make_bed", "title": "Make your bed", "icon": "🛏", "area": "steady_routine", "section": "start_day", "starter": true },
+    { "id": "ready_for_tomorrow", "title": "Get ready for tomorrow", "icon": "🎒", "area": "steady_routine", "section": "end_day", "starter": true },
+    { "id": "start_your_way", "title": "Start the day your way", "icon": "🌤️", "area": "steady_routine", "section": "start_day" },
+    { "id": "usual_wake", "title": "Wake up around your usual time", "icon": "⏰", "area": "steady_routine", "section": "start_day" },
+    { "id": "take_meds", "title": "Take your medication", "icon": "💊", "area": "steady_routine", "section": "start_day", "tags": ["medication"] }
+  ]
+}
