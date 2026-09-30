@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../content/content_bundle.dart';
 import '../core/clock.dart';
 import '../data/db/database.dart';
+import '../data/onboarding_completer.dart';
 import '../data/repositories/goal_repository.dart';
 import '../data/repositories/onboarding_repository.dart';
 import '../data/repositories/pet_repository.dart';
@@ -38,4 +39,14 @@ final goalRepositoryProvider = Provider<GoalRepository>(
 
 final onboardingRepositoryProvider = Provider<OnboardingRepository>(
   (ref) => OnboardingRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
+);
+
+final onboardingCompleterProvider = Provider<OnboardingCompleter>(
+  (ref) => OnboardingCompleter(
+    db: ref.watch(databaseProvider),
+    profiles: ref.watch(profileRepositoryProvider),
+    pets: ref.watch(petRepositoryProvider),
+    goals: ref.watch(goalRepositoryProvider),
+    clock: ref.watch(clockProvider),
+  ),
 );
