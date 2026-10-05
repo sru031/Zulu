@@ -91,12 +91,57 @@ class Goals extends Table {
   DateTimeColumn get createdAt => dateTime()();
 }
 
-@DriftDatabase(tables: [Profiles, Pets, OnboardingAnswers, Goals])
+/// One row per goal check-off. Undo deletes the latest row.
+class Completions extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get goalId => integer()();
+
+  /// `AppDay.key` of the day it counts for.
+  TextColumn get appDay => text()();
+  DateTimeColumn get completedAt => dateTime()();
+}
+
+/// Goals the user chose to skip for one day. Skipping never costs anything.
+class Skips extends Table {
+  IntColumn get goalId => integer()();
+  TextColumn get appDay => text()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {goalId, appDay};
+}
+
+/// Per-day state: low-energy mode, the adventure and the surprise gift.
+class Days extends Table {
+  TextColumn get appDay => text()();
+  BoolColumn get lowEnergy => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get adventureStartedAt => dateTime().nullable()();
+  DateTimeColumn get adventureEndsAt => dateTime().nullable()();
+  TextColumn get storyId => text().nullable()();
+  BoolColumn get adventureClaimed => boolean().withDefault(const Constant(false))();
+  BoolColumn get surpriseGiven => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {appDay};
+}
+
+/// Every coin earned or refunded. The balance is the sum.
+class WalletLedger extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get amount => integer()();
+
+  /// `goal`, `goal_undo`, `surprise`, `adventure`, `milestone` or `purchase`.
+  TextColumn get reason => text()();
+  TextColumn get refId => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+}
+
+
+@DriftDatabase(tables: [Profiles, Pets, OnboardingAnswers, Goals, Completions, Skips, Days, WalletLedger])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -105,6 +150,12 @@ class AppDatabase extends _$AppDatabase {
           if (from < 2) {
             await m.createTable(onboardingAnswers);
             await m.createTable(goals);
+          }
+          if (from < 3) {
+            await m.createTable(completions);
+            await m.createTable(skips);
+            await m.createTable(days);
+            await m.createTable(walletLedger);
           }
         },
       );

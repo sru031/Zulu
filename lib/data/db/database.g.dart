@@ -2462,6 +2462,1362 @@ class GoalsCompanion extends UpdateCompanion<Goal> {
   }
 }
 
+class $CompletionsTable extends Completions
+    with TableInfo<$CompletionsTable, Completion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CompletionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _goalIdMeta = const VerificationMeta('goalId');
+  @override
+  late final GeneratedColumn<int> goalId = GeneratedColumn<int>(
+    'goal_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _appDayMeta = const VerificationMeta('appDay');
+  @override
+  late final GeneratedColumn<String> appDay = GeneratedColumn<String>(
+    'app_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, goalId, appDay, completedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'completions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Completion> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('goal_id')) {
+      context.handle(
+        _goalIdMeta,
+        goalId.isAcceptableOrUnknown(data['goal_id']!, _goalIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_goalIdMeta);
+    }
+    if (data.containsKey('app_day')) {
+      context.handle(
+        _appDayMeta,
+        appDay.isAcceptableOrUnknown(data['app_day']!, _appDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_appDayMeta);
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_completedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Completion map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Completion(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      goalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}goal_id'],
+      )!,
+      appDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}app_day'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CompletionsTable createAlias(String alias) {
+    return $CompletionsTable(attachedDatabase, alias);
+  }
+}
+
+class Completion extends DataClass implements Insertable<Completion> {
+  final int id;
+  final int goalId;
+
+  /// `AppDay.key` of the day it counts for.
+  final String appDay;
+  final DateTime completedAt;
+  const Completion({
+    required this.id,
+    required this.goalId,
+    required this.appDay,
+    required this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['goal_id'] = Variable<int>(goalId);
+    map['app_day'] = Variable<String>(appDay);
+    map['completed_at'] = Variable<DateTime>(completedAt);
+    return map;
+  }
+
+  CompletionsCompanion toCompanion(bool nullToAbsent) {
+    return CompletionsCompanion(
+      id: Value(id),
+      goalId: Value(goalId),
+      appDay: Value(appDay),
+      completedAt: Value(completedAt),
+    );
+  }
+
+  factory Completion.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Completion(
+      id: serializer.fromJson<int>(json['id']),
+      goalId: serializer.fromJson<int>(json['goalId']),
+      appDay: serializer.fromJson<String>(json['appDay']),
+      completedAt: serializer.fromJson<DateTime>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'goalId': serializer.toJson<int>(goalId),
+      'appDay': serializer.toJson<String>(appDay),
+      'completedAt': serializer.toJson<DateTime>(completedAt),
+    };
+  }
+
+  Completion copyWith({
+    int? id,
+    int? goalId,
+    String? appDay,
+    DateTime? completedAt,
+  }) => Completion(
+    id: id ?? this.id,
+    goalId: goalId ?? this.goalId,
+    appDay: appDay ?? this.appDay,
+    completedAt: completedAt ?? this.completedAt,
+  );
+  Completion copyWithCompanion(CompletionsCompanion data) {
+    return Completion(
+      id: data.id.present ? data.id.value : this.id,
+      goalId: data.goalId.present ? data.goalId.value : this.goalId,
+      appDay: data.appDay.present ? data.appDay.value : this.appDay,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Completion(')
+          ..write('id: $id, ')
+          ..write('goalId: $goalId, ')
+          ..write('appDay: $appDay, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, goalId, appDay, completedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Completion &&
+          other.id == this.id &&
+          other.goalId == this.goalId &&
+          other.appDay == this.appDay &&
+          other.completedAt == this.completedAt);
+}
+
+class CompletionsCompanion extends UpdateCompanion<Completion> {
+  final Value<int> id;
+  final Value<int> goalId;
+  final Value<String> appDay;
+  final Value<DateTime> completedAt;
+  const CompletionsCompanion({
+    this.id = const Value.absent(),
+    this.goalId = const Value.absent(),
+    this.appDay = const Value.absent(),
+    this.completedAt = const Value.absent(),
+  });
+  CompletionsCompanion.insert({
+    this.id = const Value.absent(),
+    required int goalId,
+    required String appDay,
+    required DateTime completedAt,
+  }) : goalId = Value(goalId),
+       appDay = Value(appDay),
+       completedAt = Value(completedAt);
+  static Insertable<Completion> custom({
+    Expression<int>? id,
+    Expression<int>? goalId,
+    Expression<String>? appDay,
+    Expression<DateTime>? completedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (goalId != null) 'goal_id': goalId,
+      if (appDay != null) 'app_day': appDay,
+      if (completedAt != null) 'completed_at': completedAt,
+    });
+  }
+
+  CompletionsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? goalId,
+    Value<String>? appDay,
+    Value<DateTime>? completedAt,
+  }) {
+    return CompletionsCompanion(
+      id: id ?? this.id,
+      goalId: goalId ?? this.goalId,
+      appDay: appDay ?? this.appDay,
+      completedAt: completedAt ?? this.completedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (goalId.present) {
+      map['goal_id'] = Variable<int>(goalId.value);
+    }
+    if (appDay.present) {
+      map['app_day'] = Variable<String>(appDay.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompletionsCompanion(')
+          ..write('id: $id, ')
+          ..write('goalId: $goalId, ')
+          ..write('appDay: $appDay, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SkipsTable extends Skips with TableInfo<$SkipsTable, Skip> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SkipsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _goalIdMeta = const VerificationMeta('goalId');
+  @override
+  late final GeneratedColumn<int> goalId = GeneratedColumn<int>(
+    'goal_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _appDayMeta = const VerificationMeta('appDay');
+  @override
+  late final GeneratedColumn<String> appDay = GeneratedColumn<String>(
+    'app_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [goalId, appDay];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'skips';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Skip> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('goal_id')) {
+      context.handle(
+        _goalIdMeta,
+        goalId.isAcceptableOrUnknown(data['goal_id']!, _goalIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_goalIdMeta);
+    }
+    if (data.containsKey('app_day')) {
+      context.handle(
+        _appDayMeta,
+        appDay.isAcceptableOrUnknown(data['app_day']!, _appDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_appDayMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {goalId, appDay};
+  @override
+  Skip map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Skip(
+      goalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}goal_id'],
+      )!,
+      appDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}app_day'],
+      )!,
+    );
+  }
+
+  @override
+  $SkipsTable createAlias(String alias) {
+    return $SkipsTable(attachedDatabase, alias);
+  }
+}
+
+class Skip extends DataClass implements Insertable<Skip> {
+  final int goalId;
+  final String appDay;
+  const Skip({required this.goalId, required this.appDay});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['goal_id'] = Variable<int>(goalId);
+    map['app_day'] = Variable<String>(appDay);
+    return map;
+  }
+
+  SkipsCompanion toCompanion(bool nullToAbsent) {
+    return SkipsCompanion(goalId: Value(goalId), appDay: Value(appDay));
+  }
+
+  factory Skip.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Skip(
+      goalId: serializer.fromJson<int>(json['goalId']),
+      appDay: serializer.fromJson<String>(json['appDay']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'goalId': serializer.toJson<int>(goalId),
+      'appDay': serializer.toJson<String>(appDay),
+    };
+  }
+
+  Skip copyWith({int? goalId, String? appDay}) =>
+      Skip(goalId: goalId ?? this.goalId, appDay: appDay ?? this.appDay);
+  Skip copyWithCompanion(SkipsCompanion data) {
+    return Skip(
+      goalId: data.goalId.present ? data.goalId.value : this.goalId,
+      appDay: data.appDay.present ? data.appDay.value : this.appDay,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Skip(')
+          ..write('goalId: $goalId, ')
+          ..write('appDay: $appDay')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(goalId, appDay);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Skip &&
+          other.goalId == this.goalId &&
+          other.appDay == this.appDay);
+}
+
+class SkipsCompanion extends UpdateCompanion<Skip> {
+  final Value<int> goalId;
+  final Value<String> appDay;
+  final Value<int> rowid;
+  const SkipsCompanion({
+    this.goalId = const Value.absent(),
+    this.appDay = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SkipsCompanion.insert({
+    required int goalId,
+    required String appDay,
+    this.rowid = const Value.absent(),
+  }) : goalId = Value(goalId),
+       appDay = Value(appDay);
+  static Insertable<Skip> custom({
+    Expression<int>? goalId,
+    Expression<String>? appDay,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (goalId != null) 'goal_id': goalId,
+      if (appDay != null) 'app_day': appDay,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SkipsCompanion copyWith({
+    Value<int>? goalId,
+    Value<String>? appDay,
+    Value<int>? rowid,
+  }) {
+    return SkipsCompanion(
+      goalId: goalId ?? this.goalId,
+      appDay: appDay ?? this.appDay,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (goalId.present) {
+      map['goal_id'] = Variable<int>(goalId.value);
+    }
+    if (appDay.present) {
+      map['app_day'] = Variable<String>(appDay.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SkipsCompanion(')
+          ..write('goalId: $goalId, ')
+          ..write('appDay: $appDay, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DaysTable extends Days with TableInfo<$DaysTable, Day> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DaysTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _appDayMeta = const VerificationMeta('appDay');
+  @override
+  late final GeneratedColumn<String> appDay = GeneratedColumn<String>(
+    'app_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lowEnergyMeta = const VerificationMeta(
+    'lowEnergy',
+  );
+  @override
+  late final GeneratedColumn<bool> lowEnergy = GeneratedColumn<bool>(
+    'low_energy',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("low_energy" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _adventureStartedAtMeta =
+      const VerificationMeta('adventureStartedAt');
+  @override
+  late final GeneratedColumn<DateTime> adventureStartedAt =
+      GeneratedColumn<DateTime>(
+        'adventure_started_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _adventureEndsAtMeta = const VerificationMeta(
+    'adventureEndsAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> adventureEndsAt =
+      GeneratedColumn<DateTime>(
+        'adventure_ends_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _storyIdMeta = const VerificationMeta(
+    'storyId',
+  );
+  @override
+  late final GeneratedColumn<String> storyId = GeneratedColumn<String>(
+    'story_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _adventureClaimedMeta = const VerificationMeta(
+    'adventureClaimed',
+  );
+  @override
+  late final GeneratedColumn<bool> adventureClaimed = GeneratedColumn<bool>(
+    'adventure_claimed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("adventure_claimed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _surpriseGivenMeta = const VerificationMeta(
+    'surpriseGiven',
+  );
+  @override
+  late final GeneratedColumn<bool> surpriseGiven = GeneratedColumn<bool>(
+    'surprise_given',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("surprise_given" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    appDay,
+    lowEnergy,
+    adventureStartedAt,
+    adventureEndsAt,
+    storyId,
+    adventureClaimed,
+    surpriseGiven,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'days';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Day> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('app_day')) {
+      context.handle(
+        _appDayMeta,
+        appDay.isAcceptableOrUnknown(data['app_day']!, _appDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_appDayMeta);
+    }
+    if (data.containsKey('low_energy')) {
+      context.handle(
+        _lowEnergyMeta,
+        lowEnergy.isAcceptableOrUnknown(data['low_energy']!, _lowEnergyMeta),
+      );
+    }
+    if (data.containsKey('adventure_started_at')) {
+      context.handle(
+        _adventureStartedAtMeta,
+        adventureStartedAt.isAcceptableOrUnknown(
+          data['adventure_started_at']!,
+          _adventureStartedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('adventure_ends_at')) {
+      context.handle(
+        _adventureEndsAtMeta,
+        adventureEndsAt.isAcceptableOrUnknown(
+          data['adventure_ends_at']!,
+          _adventureEndsAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('story_id')) {
+      context.handle(
+        _storyIdMeta,
+        storyId.isAcceptableOrUnknown(data['story_id']!, _storyIdMeta),
+      );
+    }
+    if (data.containsKey('adventure_claimed')) {
+      context.handle(
+        _adventureClaimedMeta,
+        adventureClaimed.isAcceptableOrUnknown(
+          data['adventure_claimed']!,
+          _adventureClaimedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('surprise_given')) {
+      context.handle(
+        _surpriseGivenMeta,
+        surpriseGiven.isAcceptableOrUnknown(
+          data['surprise_given']!,
+          _surpriseGivenMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {appDay};
+  @override
+  Day map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Day(
+      appDay: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}app_day'],
+      )!,
+      lowEnergy: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}low_energy'],
+      )!,
+      adventureStartedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}adventure_started_at'],
+      ),
+      adventureEndsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}adventure_ends_at'],
+      ),
+      storyId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}story_id'],
+      ),
+      adventureClaimed: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}adventure_claimed'],
+      )!,
+      surpriseGiven: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}surprise_given'],
+      )!,
+    );
+  }
+
+  @override
+  $DaysTable createAlias(String alias) {
+    return $DaysTable(attachedDatabase, alias);
+  }
+}
+
+class Day extends DataClass implements Insertable<Day> {
+  final String appDay;
+  final bool lowEnergy;
+  final DateTime? adventureStartedAt;
+  final DateTime? adventureEndsAt;
+  final String? storyId;
+  final bool adventureClaimed;
+  final bool surpriseGiven;
+  const Day({
+    required this.appDay,
+    required this.lowEnergy,
+    this.adventureStartedAt,
+    this.adventureEndsAt,
+    this.storyId,
+    required this.adventureClaimed,
+    required this.surpriseGiven,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['app_day'] = Variable<String>(appDay);
+    map['low_energy'] = Variable<bool>(lowEnergy);
+    if (!nullToAbsent || adventureStartedAt != null) {
+      map['adventure_started_at'] = Variable<DateTime>(adventureStartedAt);
+    }
+    if (!nullToAbsent || adventureEndsAt != null) {
+      map['adventure_ends_at'] = Variable<DateTime>(adventureEndsAt);
+    }
+    if (!nullToAbsent || storyId != null) {
+      map['story_id'] = Variable<String>(storyId);
+    }
+    map['adventure_claimed'] = Variable<bool>(adventureClaimed);
+    map['surprise_given'] = Variable<bool>(surpriseGiven);
+    return map;
+  }
+
+  DaysCompanion toCompanion(bool nullToAbsent) {
+    return DaysCompanion(
+      appDay: Value(appDay),
+      lowEnergy: Value(lowEnergy),
+      adventureStartedAt: adventureStartedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(adventureStartedAt),
+      adventureEndsAt: adventureEndsAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(adventureEndsAt),
+      storyId: storyId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(storyId),
+      adventureClaimed: Value(adventureClaimed),
+      surpriseGiven: Value(surpriseGiven),
+    );
+  }
+
+  factory Day.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Day(
+      appDay: serializer.fromJson<String>(json['appDay']),
+      lowEnergy: serializer.fromJson<bool>(json['lowEnergy']),
+      adventureStartedAt: serializer.fromJson<DateTime?>(
+        json['adventureStartedAt'],
+      ),
+      adventureEndsAt: serializer.fromJson<DateTime?>(json['adventureEndsAt']),
+      storyId: serializer.fromJson<String?>(json['storyId']),
+      adventureClaimed: serializer.fromJson<bool>(json['adventureClaimed']),
+      surpriseGiven: serializer.fromJson<bool>(json['surpriseGiven']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'appDay': serializer.toJson<String>(appDay),
+      'lowEnergy': serializer.toJson<bool>(lowEnergy),
+      'adventureStartedAt': serializer.toJson<DateTime?>(adventureStartedAt),
+      'adventureEndsAt': serializer.toJson<DateTime?>(adventureEndsAt),
+      'storyId': serializer.toJson<String?>(storyId),
+      'adventureClaimed': serializer.toJson<bool>(adventureClaimed),
+      'surpriseGiven': serializer.toJson<bool>(surpriseGiven),
+    };
+  }
+
+  Day copyWith({
+    String? appDay,
+    bool? lowEnergy,
+    Value<DateTime?> adventureStartedAt = const Value.absent(),
+    Value<DateTime?> adventureEndsAt = const Value.absent(),
+    Value<String?> storyId = const Value.absent(),
+    bool? adventureClaimed,
+    bool? surpriseGiven,
+  }) => Day(
+    appDay: appDay ?? this.appDay,
+    lowEnergy: lowEnergy ?? this.lowEnergy,
+    adventureStartedAt: adventureStartedAt.present
+        ? adventureStartedAt.value
+        : this.adventureStartedAt,
+    adventureEndsAt: adventureEndsAt.present
+        ? adventureEndsAt.value
+        : this.adventureEndsAt,
+    storyId: storyId.present ? storyId.value : this.storyId,
+    adventureClaimed: adventureClaimed ?? this.adventureClaimed,
+    surpriseGiven: surpriseGiven ?? this.surpriseGiven,
+  );
+  Day copyWithCompanion(DaysCompanion data) {
+    return Day(
+      appDay: data.appDay.present ? data.appDay.value : this.appDay,
+      lowEnergy: data.lowEnergy.present ? data.lowEnergy.value : this.lowEnergy,
+      adventureStartedAt: data.adventureStartedAt.present
+          ? data.adventureStartedAt.value
+          : this.adventureStartedAt,
+      adventureEndsAt: data.adventureEndsAt.present
+          ? data.adventureEndsAt.value
+          : this.adventureEndsAt,
+      storyId: data.storyId.present ? data.storyId.value : this.storyId,
+      adventureClaimed: data.adventureClaimed.present
+          ? data.adventureClaimed.value
+          : this.adventureClaimed,
+      surpriseGiven: data.surpriseGiven.present
+          ? data.surpriseGiven.value
+          : this.surpriseGiven,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Day(')
+          ..write('appDay: $appDay, ')
+          ..write('lowEnergy: $lowEnergy, ')
+          ..write('adventureStartedAt: $adventureStartedAt, ')
+          ..write('adventureEndsAt: $adventureEndsAt, ')
+          ..write('storyId: $storyId, ')
+          ..write('adventureClaimed: $adventureClaimed, ')
+          ..write('surpriseGiven: $surpriseGiven')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    appDay,
+    lowEnergy,
+    adventureStartedAt,
+    adventureEndsAt,
+    storyId,
+    adventureClaimed,
+    surpriseGiven,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Day &&
+          other.appDay == this.appDay &&
+          other.lowEnergy == this.lowEnergy &&
+          other.adventureStartedAt == this.adventureStartedAt &&
+          other.adventureEndsAt == this.adventureEndsAt &&
+          other.storyId == this.storyId &&
+          other.adventureClaimed == this.adventureClaimed &&
+          other.surpriseGiven == this.surpriseGiven);
+}
+
+class DaysCompanion extends UpdateCompanion<Day> {
+  final Value<String> appDay;
+  final Value<bool> lowEnergy;
+  final Value<DateTime?> adventureStartedAt;
+  final Value<DateTime?> adventureEndsAt;
+  final Value<String?> storyId;
+  final Value<bool> adventureClaimed;
+  final Value<bool> surpriseGiven;
+  final Value<int> rowid;
+  const DaysCompanion({
+    this.appDay = const Value.absent(),
+    this.lowEnergy = const Value.absent(),
+    this.adventureStartedAt = const Value.absent(),
+    this.adventureEndsAt = const Value.absent(),
+    this.storyId = const Value.absent(),
+    this.adventureClaimed = const Value.absent(),
+    this.surpriseGiven = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DaysCompanion.insert({
+    required String appDay,
+    this.lowEnergy = const Value.absent(),
+    this.adventureStartedAt = const Value.absent(),
+    this.adventureEndsAt = const Value.absent(),
+    this.storyId = const Value.absent(),
+    this.adventureClaimed = const Value.absent(),
+    this.surpriseGiven = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : appDay = Value(appDay);
+  static Insertable<Day> custom({
+    Expression<String>? appDay,
+    Expression<bool>? lowEnergy,
+    Expression<DateTime>? adventureStartedAt,
+    Expression<DateTime>? adventureEndsAt,
+    Expression<String>? storyId,
+    Expression<bool>? adventureClaimed,
+    Expression<bool>? surpriseGiven,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (appDay != null) 'app_day': appDay,
+      if (lowEnergy != null) 'low_energy': lowEnergy,
+      if (adventureStartedAt != null)
+        'adventure_started_at': adventureStartedAt,
+      if (adventureEndsAt != null) 'adventure_ends_at': adventureEndsAt,
+      if (storyId != null) 'story_id': storyId,
+      if (adventureClaimed != null) 'adventure_claimed': adventureClaimed,
+      if (surpriseGiven != null) 'surprise_given': surpriseGiven,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DaysCompanion copyWith({
+    Value<String>? appDay,
+    Value<bool>? lowEnergy,
+    Value<DateTime?>? adventureStartedAt,
+    Value<DateTime?>? adventureEndsAt,
+    Value<String?>? storyId,
+    Value<bool>? adventureClaimed,
+    Value<bool>? surpriseGiven,
+    Value<int>? rowid,
+  }) {
+    return DaysCompanion(
+      appDay: appDay ?? this.appDay,
+      lowEnergy: lowEnergy ?? this.lowEnergy,
+      adventureStartedAt: adventureStartedAt ?? this.adventureStartedAt,
+      adventureEndsAt: adventureEndsAt ?? this.adventureEndsAt,
+      storyId: storyId ?? this.storyId,
+      adventureClaimed: adventureClaimed ?? this.adventureClaimed,
+      surpriseGiven: surpriseGiven ?? this.surpriseGiven,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (appDay.present) {
+      map['app_day'] = Variable<String>(appDay.value);
+    }
+    if (lowEnergy.present) {
+      map['low_energy'] = Variable<bool>(lowEnergy.value);
+    }
+    if (adventureStartedAt.present) {
+      map['adventure_started_at'] = Variable<DateTime>(
+        adventureStartedAt.value,
+      );
+    }
+    if (adventureEndsAt.present) {
+      map['adventure_ends_at'] = Variable<DateTime>(adventureEndsAt.value);
+    }
+    if (storyId.present) {
+      map['story_id'] = Variable<String>(storyId.value);
+    }
+    if (adventureClaimed.present) {
+      map['adventure_claimed'] = Variable<bool>(adventureClaimed.value);
+    }
+    if (surpriseGiven.present) {
+      map['surprise_given'] = Variable<bool>(surpriseGiven.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DaysCompanion(')
+          ..write('appDay: $appDay, ')
+          ..write('lowEnergy: $lowEnergy, ')
+          ..write('adventureStartedAt: $adventureStartedAt, ')
+          ..write('adventureEndsAt: $adventureEndsAt, ')
+          ..write('storyId: $storyId, ')
+          ..write('adventureClaimed: $adventureClaimed, ')
+          ..write('surpriseGiven: $surpriseGiven, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $WalletLedgerTable extends WalletLedger
+    with TableInfo<$WalletLedgerTable, WalletLedgerData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WalletLedgerTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<int> amount = GeneratedColumn<int>(
+    'amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reasonMeta = const VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>(
+    'reason',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _refIdMeta = const VerificationMeta('refId');
+  @override
+  late final GeneratedColumn<String> refId = GeneratedColumn<String>(
+    'ref_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, amount, reason, refId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'wallet_ledger';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<WalletLedgerData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('amount')) {
+      context.handle(
+        _amountMeta,
+        amount.isAcceptableOrUnknown(data['amount']!, _amountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('reason')) {
+      context.handle(
+        _reasonMeta,
+        reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_reasonMeta);
+    }
+    if (data.containsKey('ref_id')) {
+      context.handle(
+        _refIdMeta,
+        refId.isAcceptableOrUnknown(data['ref_id']!, _refIdMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  WalletLedgerData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WalletLedgerData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      amount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount'],
+      )!,
+      reason: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reason'],
+      )!,
+      refId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ref_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $WalletLedgerTable createAlias(String alias) {
+    return $WalletLedgerTable(attachedDatabase, alias);
+  }
+}
+
+class WalletLedgerData extends DataClass
+    implements Insertable<WalletLedgerData> {
+  final int id;
+  final int amount;
+
+  /// `goal`, `goal_undo`, `surprise`, `adventure`, `milestone` or `purchase`.
+  final String reason;
+  final String? refId;
+  final DateTime createdAt;
+  const WalletLedgerData({
+    required this.id,
+    required this.amount,
+    required this.reason,
+    this.refId,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['amount'] = Variable<int>(amount);
+    map['reason'] = Variable<String>(reason);
+    if (!nullToAbsent || refId != null) {
+      map['ref_id'] = Variable<String>(refId);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  WalletLedgerCompanion toCompanion(bool nullToAbsent) {
+    return WalletLedgerCompanion(
+      id: Value(id),
+      amount: Value(amount),
+      reason: Value(reason),
+      refId: refId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(refId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory WalletLedgerData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WalletLedgerData(
+      id: serializer.fromJson<int>(json['id']),
+      amount: serializer.fromJson<int>(json['amount']),
+      reason: serializer.fromJson<String>(json['reason']),
+      refId: serializer.fromJson<String?>(json['refId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'amount': serializer.toJson<int>(amount),
+      'reason': serializer.toJson<String>(reason),
+      'refId': serializer.toJson<String?>(refId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  WalletLedgerData copyWith({
+    int? id,
+    int? amount,
+    String? reason,
+    Value<String?> refId = const Value.absent(),
+    DateTime? createdAt,
+  }) => WalletLedgerData(
+    id: id ?? this.id,
+    amount: amount ?? this.amount,
+    reason: reason ?? this.reason,
+    refId: refId.present ? refId.value : this.refId,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  WalletLedgerData copyWithCompanion(WalletLedgerCompanion data) {
+    return WalletLedgerData(
+      id: data.id.present ? data.id.value : this.id,
+      amount: data.amount.present ? data.amount.value : this.amount,
+      reason: data.reason.present ? data.reason.value : this.reason,
+      refId: data.refId.present ? data.refId.value : this.refId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WalletLedgerData(')
+          ..write('id: $id, ')
+          ..write('amount: $amount, ')
+          ..write('reason: $reason, ')
+          ..write('refId: $refId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, amount, reason, refId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WalletLedgerData &&
+          other.id == this.id &&
+          other.amount == this.amount &&
+          other.reason == this.reason &&
+          other.refId == this.refId &&
+          other.createdAt == this.createdAt);
+}
+
+class WalletLedgerCompanion extends UpdateCompanion<WalletLedgerData> {
+  final Value<int> id;
+  final Value<int> amount;
+  final Value<String> reason;
+  final Value<String?> refId;
+  final Value<DateTime> createdAt;
+  const WalletLedgerCompanion({
+    this.id = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.refId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  WalletLedgerCompanion.insert({
+    this.id = const Value.absent(),
+    required int amount,
+    required String reason,
+    this.refId = const Value.absent(),
+    required DateTime createdAt,
+  }) : amount = Value(amount),
+       reason = Value(reason),
+       createdAt = Value(createdAt);
+  static Insertable<WalletLedgerData> custom({
+    Expression<int>? id,
+    Expression<int>? amount,
+    Expression<String>? reason,
+    Expression<String>? refId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (amount != null) 'amount': amount,
+      if (reason != null) 'reason': reason,
+      if (refId != null) 'ref_id': refId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  WalletLedgerCompanion copyWith({
+    Value<int>? id,
+    Value<int>? amount,
+    Value<String>? reason,
+    Value<String?>? refId,
+    Value<DateTime>? createdAt,
+  }) {
+    return WalletLedgerCompanion(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+      reason: reason ?? this.reason,
+      refId: refId ?? this.refId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<int>(amount.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (refId.present) {
+      map['ref_id'] = Variable<String>(refId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WalletLedgerCompanion(')
+          ..write('id: $id, ')
+          ..write('amount: $amount, ')
+          ..write('reason: $reason, ')
+          ..write('refId: $refId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2470,6 +3826,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $OnboardingAnswersTable onboardingAnswers =
       $OnboardingAnswersTable(this);
   late final $GoalsTable goals = $GoalsTable(this);
+  late final $CompletionsTable completions = $CompletionsTable(this);
+  late final $SkipsTable skips = $SkipsTable(this);
+  late final $DaysTable days = $DaysTable(this);
+  late final $WalletLedgerTable walletLedger = $WalletLedgerTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2479,6 +3839,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     pets,
     onboardingAnswers,
     goals,
+    completions,
+    skips,
+    days,
+    walletLedger,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -3695,6 +5059,774 @@ typedef $$GoalsTableProcessedTableManager =
       Goal,
       PrefetchHooks Function()
     >;
+typedef $$CompletionsTableCreateCompanionBuilder =
+    CompletionsCompanion Function({
+      Value<int> id,
+      required int goalId,
+      required String appDay,
+      required DateTime completedAt,
+    });
+typedef $$CompletionsTableUpdateCompanionBuilder =
+    CompletionsCompanion Function({
+      Value<int> id,
+      Value<int> goalId,
+      Value<String> appDay,
+      Value<DateTime> completedAt,
+    });
+
+class $$CompletionsTableFilterComposer
+    extends Composer<_$AppDatabase, $CompletionsTable> {
+  $$CompletionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get goalId => $composableBuilder(
+    column: $table.goalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CompletionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CompletionsTable> {
+  $$CompletionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get goalId => $composableBuilder(
+    column: $table.goalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CompletionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CompletionsTable> {
+  $$CompletionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get goalId =>
+      $composableBuilder(column: $table.goalId, builder: (column) => column);
+
+  GeneratedColumn<String> get appDay =>
+      $composableBuilder(column: $table.appDay, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+}
+
+class $$CompletionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CompletionsTable,
+          Completion,
+          $$CompletionsTableFilterComposer,
+          $$CompletionsTableOrderingComposer,
+          $$CompletionsTableAnnotationComposer,
+          $$CompletionsTableCreateCompanionBuilder,
+          $$CompletionsTableUpdateCompanionBuilder,
+          (
+            Completion,
+            BaseReferences<_$AppDatabase, $CompletionsTable, Completion>,
+          ),
+          Completion,
+          PrefetchHooks Function()
+        > {
+  $$CompletionsTableTableManager(_$AppDatabase db, $CompletionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CompletionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CompletionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CompletionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> goalId = const Value.absent(),
+                Value<String> appDay = const Value.absent(),
+                Value<DateTime> completedAt = const Value.absent(),
+              }) => CompletionsCompanion(
+                id: id,
+                goalId: goalId,
+                appDay: appDay,
+                completedAt: completedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int goalId,
+                required String appDay,
+                required DateTime completedAt,
+              }) => CompletionsCompanion.insert(
+                id: id,
+                goalId: goalId,
+                appDay: appDay,
+                completedAt: completedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CompletionsTable, Completion>(table),
+                  BaseReferences<_$AppDatabase, $CompletionsTable, Completion>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CompletionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CompletionsTable,
+      Completion,
+      $$CompletionsTableFilterComposer,
+      $$CompletionsTableOrderingComposer,
+      $$CompletionsTableAnnotationComposer,
+      $$CompletionsTableCreateCompanionBuilder,
+      $$CompletionsTableUpdateCompanionBuilder,
+      (
+        Completion,
+        BaseReferences<_$AppDatabase, $CompletionsTable, Completion>,
+      ),
+      Completion,
+      PrefetchHooks Function()
+    >;
+typedef $$SkipsTableCreateCompanionBuilder = SkipsCompanion Function({
+  required int goalId,
+  required String appDay,
+  Value<int> rowid,
+});
+typedef $$SkipsTableUpdateCompanionBuilder = SkipsCompanion Function({
+  Value<int> goalId,
+  Value<String> appDay,
+  Value<int> rowid,
+});
+
+class $$SkipsTableFilterComposer extends Composer<_$AppDatabase, $SkipsTable> {
+  $$SkipsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get goalId => $composableBuilder(
+    column: $table.goalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SkipsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SkipsTable> {
+  $$SkipsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get goalId => $composableBuilder(
+    column: $table.goalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SkipsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SkipsTable> {
+  $$SkipsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get goalId =>
+      $composableBuilder(column: $table.goalId, builder: (column) => column);
+
+  GeneratedColumn<String> get appDay =>
+      $composableBuilder(column: $table.appDay, builder: (column) => column);
+}
+
+class $$SkipsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SkipsTable,
+          Skip,
+          $$SkipsTableFilterComposer,
+          $$SkipsTableOrderingComposer,
+          $$SkipsTableAnnotationComposer,
+          $$SkipsTableCreateCompanionBuilder,
+          $$SkipsTableUpdateCompanionBuilder,
+          (Skip, BaseReferences<_$AppDatabase, $SkipsTable, Skip>),
+          Skip,
+          PrefetchHooks Function()
+        > {
+  $$SkipsTableTableManager(_$AppDatabase db, $SkipsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SkipsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SkipsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SkipsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> goalId = const Value.absent(),
+            Value<String> appDay = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => SkipsCompanion(goalId: goalId, appDay: appDay, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required int goalId,
+                required String appDay,
+                Value<int> rowid = const Value.absent(),
+              }) => SkipsCompanion.insert(
+                goalId: goalId,
+                appDay: appDay,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SkipsTable, Skip>(table),
+                  BaseReferences<_$AppDatabase, $SkipsTable, Skip>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SkipsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SkipsTable,
+      Skip,
+      $$SkipsTableFilterComposer,
+      $$SkipsTableOrderingComposer,
+      $$SkipsTableAnnotationComposer,
+      $$SkipsTableCreateCompanionBuilder,
+      $$SkipsTableUpdateCompanionBuilder,
+      (Skip, BaseReferences<_$AppDatabase, $SkipsTable, Skip>),
+      Skip,
+      PrefetchHooks Function()
+    >;
+typedef $$DaysTableCreateCompanionBuilder = DaysCompanion Function({
+  required String appDay,
+  Value<bool> lowEnergy,
+  Value<DateTime?> adventureStartedAt,
+  Value<DateTime?> adventureEndsAt,
+  Value<String?> storyId,
+  Value<bool> adventureClaimed,
+  Value<bool> surpriseGiven,
+  Value<int> rowid,
+});
+typedef $$DaysTableUpdateCompanionBuilder = DaysCompanion Function({
+  Value<String> appDay,
+  Value<bool> lowEnergy,
+  Value<DateTime?> adventureStartedAt,
+  Value<DateTime?> adventureEndsAt,
+  Value<String?> storyId,
+  Value<bool> adventureClaimed,
+  Value<bool> surpriseGiven,
+  Value<int> rowid,
+});
+
+class $$DaysTableFilterComposer extends Composer<_$AppDatabase, $DaysTable> {
+  $$DaysTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get lowEnergy => $composableBuilder(
+    column: $table.lowEnergy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get adventureStartedAt => $composableBuilder(
+    column: $table.adventureStartedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get adventureEndsAt => $composableBuilder(
+    column: $table.adventureEndsAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get storyId => $composableBuilder(
+    column: $table.storyId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get adventureClaimed => $composableBuilder(
+    column: $table.adventureClaimed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get surpriseGiven => $composableBuilder(
+    column: $table.surpriseGiven,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DaysTableOrderingComposer extends Composer<_$AppDatabase, $DaysTable> {
+  $$DaysTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get appDay => $composableBuilder(
+    column: $table.appDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get lowEnergy => $composableBuilder(
+    column: $table.lowEnergy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get adventureStartedAt => $composableBuilder(
+    column: $table.adventureStartedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get adventureEndsAt => $composableBuilder(
+    column: $table.adventureEndsAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get storyId => $composableBuilder(
+    column: $table.storyId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get adventureClaimed => $composableBuilder(
+    column: $table.adventureClaimed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get surpriseGiven => $composableBuilder(
+    column: $table.surpriseGiven,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DaysTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DaysTable> {
+  $$DaysTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get appDay =>
+      $composableBuilder(column: $table.appDay, builder: (column) => column);
+
+  GeneratedColumn<bool> get lowEnergy =>
+      $composableBuilder(column: $table.lowEnergy, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get adventureStartedAt => $composableBuilder(
+    column: $table.adventureStartedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get adventureEndsAt => $composableBuilder(
+    column: $table.adventureEndsAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get storyId =>
+      $composableBuilder(column: $table.storyId, builder: (column) => column);
+
+  GeneratedColumn<bool> get adventureClaimed => $composableBuilder(
+    column: $table.adventureClaimed,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get surpriseGiven => $composableBuilder(
+    column: $table.surpriseGiven,
+    builder: (column) => column,
+  );
+}
+
+class $$DaysTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DaysTable,
+          Day,
+          $$DaysTableFilterComposer,
+          $$DaysTableOrderingComposer,
+          $$DaysTableAnnotationComposer,
+          $$DaysTableCreateCompanionBuilder,
+          $$DaysTableUpdateCompanionBuilder,
+          (Day, BaseReferences<_$AppDatabase, $DaysTable, Day>),
+          Day,
+          PrefetchHooks Function()
+        > {
+  $$DaysTableTableManager(_$AppDatabase db, $DaysTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DaysTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DaysTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DaysTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> appDay = const Value.absent(),
+                Value<bool> lowEnergy = const Value.absent(),
+                Value<DateTime?> adventureStartedAt = const Value.absent(),
+                Value<DateTime?> adventureEndsAt = const Value.absent(),
+                Value<String?> storyId = const Value.absent(),
+                Value<bool> adventureClaimed = const Value.absent(),
+                Value<bool> surpriseGiven = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DaysCompanion(
+                appDay: appDay,
+                lowEnergy: lowEnergy,
+                adventureStartedAt: adventureStartedAt,
+                adventureEndsAt: adventureEndsAt,
+                storyId: storyId,
+                adventureClaimed: adventureClaimed,
+                surpriseGiven: surpriseGiven,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String appDay,
+                Value<bool> lowEnergy = const Value.absent(),
+                Value<DateTime?> adventureStartedAt = const Value.absent(),
+                Value<DateTime?> adventureEndsAt = const Value.absent(),
+                Value<String?> storyId = const Value.absent(),
+                Value<bool> adventureClaimed = const Value.absent(),
+                Value<bool> surpriseGiven = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DaysCompanion.insert(
+                appDay: appDay,
+                lowEnergy: lowEnergy,
+                adventureStartedAt: adventureStartedAt,
+                adventureEndsAt: adventureEndsAt,
+                storyId: storyId,
+                adventureClaimed: adventureClaimed,
+                surpriseGiven: surpriseGiven,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DaysTable, Day>(table),
+                  BaseReferences<_$AppDatabase, $DaysTable, Day>(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DaysTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DaysTable,
+      Day,
+      $$DaysTableFilterComposer,
+      $$DaysTableOrderingComposer,
+      $$DaysTableAnnotationComposer,
+      $$DaysTableCreateCompanionBuilder,
+      $$DaysTableUpdateCompanionBuilder,
+      (Day, BaseReferences<_$AppDatabase, $DaysTable, Day>),
+      Day,
+      PrefetchHooks Function()
+    >;
+typedef $$WalletLedgerTableCreateCompanionBuilder =
+    WalletLedgerCompanion Function({
+      Value<int> id,
+      required int amount,
+      required String reason,
+      Value<String?> refId,
+      required DateTime createdAt,
+    });
+typedef $$WalletLedgerTableUpdateCompanionBuilder =
+    WalletLedgerCompanion Function({
+      Value<int> id,
+      Value<int> amount,
+      Value<String> reason,
+      Value<String?> refId,
+      Value<DateTime> createdAt,
+    });
+
+class $$WalletLedgerTableFilterComposer
+    extends Composer<_$AppDatabase, $WalletLedgerTable> {
+  $$WalletLedgerTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get refId => $composableBuilder(
+    column: $table.refId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$WalletLedgerTableOrderingComposer
+    extends Composer<_$AppDatabase, $WalletLedgerTable> {
+  $$WalletLedgerTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amount => $composableBuilder(
+    column: $table.amount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get refId => $composableBuilder(
+    column: $table.refId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WalletLedgerTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WalletLedgerTable> {
+  $$WalletLedgerTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get amount =>
+      $composableBuilder(column: $table.amount, builder: (column) => column);
+
+  GeneratedColumn<String> get reason =>
+      $composableBuilder(column: $table.reason, builder: (column) => column);
+
+  GeneratedColumn<String> get refId =>
+      $composableBuilder(column: $table.refId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$WalletLedgerTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $WalletLedgerTable,
+          WalletLedgerData,
+          $$WalletLedgerTableFilterComposer,
+          $$WalletLedgerTableOrderingComposer,
+          $$WalletLedgerTableAnnotationComposer,
+          $$WalletLedgerTableCreateCompanionBuilder,
+          $$WalletLedgerTableUpdateCompanionBuilder,
+          (
+            WalletLedgerData,
+            BaseReferences<_$AppDatabase, $WalletLedgerTable, WalletLedgerData>,
+          ),
+          WalletLedgerData,
+          PrefetchHooks Function()
+        > {
+  $$WalletLedgerTableTableManager(_$AppDatabase db, $WalletLedgerTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WalletLedgerTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WalletLedgerTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WalletLedgerTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> amount = const Value.absent(),
+                Value<String> reason = const Value.absent(),
+                Value<String?> refId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+              }) => WalletLedgerCompanion(
+                id: id,
+                amount: amount,
+                reason: reason,
+                refId: refId,
+                createdAt: createdAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int amount,
+                required String reason,
+                Value<String?> refId = const Value.absent(),
+                required DateTime createdAt,
+              }) => WalletLedgerCompanion.insert(
+                id: id,
+                amount: amount,
+                reason: reason,
+                refId: refId,
+                createdAt: createdAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$WalletLedgerTable, WalletLedgerData>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $WalletLedgerTable,
+                    WalletLedgerData
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$WalletLedgerTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $WalletLedgerTable,
+      WalletLedgerData,
+      $$WalletLedgerTableFilterComposer,
+      $$WalletLedgerTableOrderingComposer,
+      $$WalletLedgerTableAnnotationComposer,
+      $$WalletLedgerTableCreateCompanionBuilder,
+      $$WalletLedgerTableUpdateCompanionBuilder,
+      (
+        WalletLedgerData,
+        BaseReferences<_$AppDatabase, $WalletLedgerTable, WalletLedgerData>,
+      ),
+      WalletLedgerData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3706,4 +5838,11 @@ class $AppDatabaseManager {
       $$OnboardingAnswersTableTableManager(_db, _db.onboardingAnswers);
   $$GoalsTableTableManager get goals =>
       $$GoalsTableTableManager(_db, _db.goals);
+  $$CompletionsTableTableManager get completions =>
+      $$CompletionsTableTableManager(_db, _db.completions);
+  $$SkipsTableTableManager get skips =>
+      $$SkipsTableTableManager(_db, _db.skips);
+  $$DaysTableTableManager get days => $$DaysTableTableManager(_db, _db.days);
+  $$WalletLedgerTableTableManager get walletLedger =>
+      $$WalletLedgerTableTableManager(_db, _db.walletLedger);
 }
