@@ -10,6 +10,7 @@ import '../theme_kit/theme_manifest.dart';
 import 'content_bundle.dart';
 import 'goal_library.dart';
 import 'onboarding_script.dart';
+import 'story_book.dart';
 
 class ValidationIssue {
   const ValidationIssue.error(this.where, this.message) : isError = true;
@@ -140,6 +141,15 @@ class AssetValidator {
       if (unknown.isNotEmpty) {
         issues.add(ValidationIssue.error(
           '${OnboardingScript.fileName} $where',
+          'unknown placeholders ${unknown.map((u) => '{$u}').join(', ')}',
+        ));
+      }
+    }
+    for (final story in content.stories.stories) {
+      final unknown = unknownPlaceholders(story.text);
+      if (unknown.isNotEmpty) {
+        issues.add(ValidationIssue.error(
+          '${StoryBook.fileName} "${story.id}"',
           'unknown placeholders ${unknown.map((u) => '{$u}').join(', ')}',
         ));
       }

@@ -1,0 +1,18 @@
+{
+  "stories": [
+    { "id": "pond_ripples", "place": "Willow Pond", "text": "{petName} sat by the pond and counted ripples until {they} lost count and started again. It was a very good kind of nothing." },
+    { "id": "lost_mitten", "place": "Maple Lane", "text": "{petName} found a tiny lost mitten and hung it on a low branch so its owner could spot it. {They} felt quietly proud all the way home." },
+    { "id": "cloud_shapes", "place": "Meadow Hill", "text": "{petName} lay in the grass and saw a cloud shaped like a teapot. Then a whale. Then, maybe, you." },
+    { "id": "bakery_window", "place": "Crumb Street", "text": "{petName} pressed {their} nose to a bakery window. The baker waved. {They} waved back, a little too hard, and nearly fell over." },
+    { "id": "moss_carpet", "place": "Fern Hollow", "text": "{petName} discovered moss so soft {they} took a nap on it. Explorers need rest too." },
+    { "id": "snail_race", "place": "Garden Wall", "text": "{petName} watched two snails race. Nobody won. Everyone seemed fine with that.", "stages": ["baby", "toddler"] },
+    { "id": "first_puddle", "place": "Rainy Corner", "text": "{petName} jumped in {their} very first puddle. Then the second one. Then all of them.", "stages": ["baby", "toddler"] },
+    { "id": "lighthouse", "place": "Seagull Point", "text": "{petName} climbed to the old lighthouse and watched boats find their way home. {They} thought of you and hurried back." },
+    { "id": "library_nook", "place": "Little Library", "text": "{petName} found a reading nook and read half a book about stars. {They} saved the other half for another day.", "stages": ["teen", "adult"] },
+    { "id": "market_song", "place": "Sunday Market", "text": "A street musician played a song {petName} didn't know, and {they} hummed along anyway. Some songs are like that." },
+    { "id": "night_garden", "place": "Moonflower Garden", "text": "{petName} saw flowers that only open at night. {They} whispered goodnight to each one.", "stages": ["teen", "adult"] },
+    { "id": "kind_stranger", "place": "Bus Stop", "text": "{petName} shared shade with a tired traveller. They didn't say much. They didn't need to.", "stages": ["toddler", "teen", "adult"] },
+    { "id": "kite_day", "place": "Windy Field", "text": "{petName} helped a kid untangle a kite. It flew higher than both of them expected." },
+    { "id": "old_tree", "place": "The Old Oak", "text": "{petName} leaned against a very old tree. It had stood through many storms, and it was still here. {They} found that comforting.", "stages": ["adult"] }
+  ]
+}

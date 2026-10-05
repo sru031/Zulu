@@ -98,6 +98,7 @@ void main() {
       rules: content.rules,
       goals: content.goals,
       onboarding: OnboardingScript.fromJson(JsonReader('onboarding.json', json)),
+      stories: content.stories,
     );
     final issues = AssetValidator(exists: files.contains).validate(theme: kit, content: broken);
     expect(issues.where((i) => i.isError).map((i) => i.message), contains(contains('fly_to_the_moon')));
