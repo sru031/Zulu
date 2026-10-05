@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,6 +6,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:zulu/app/app.dart';
 import 'package:zulu/app/providers.dart';
 import 'package:zulu/content/content_bundle.dart';
+import 'package:zulu/core/clock.dart';
+import 'package:zulu/data/repositories/profile_repository.dart';
 import 'package:zulu/data/db/database.dart';
 import 'package:zulu/theme_kit/theme_kit.dart';
 
@@ -23,6 +26,11 @@ void main() {
 
   Future<void> pumpApp(WidgetTester tester) async {
     db = AppDatabase(NativeDatabase.memory());
+    await tester.runAsync(() async {
+      final profiles = ProfileRepository(db, const SystemClock());
+      await profiles.ensure();
+      await profiles.update(ProfilesCompanion(onboardingDoneAt: Value(DateTime(2026, 10, 5))));
+    });
     await tester.pumpWidget(ProviderScope(
       overrides: [
         databaseProvider.overrideWithValue(db),
@@ -32,7 +40,10 @@ void main() {
       ],
       child: const ZuluApp(),
     ));
-    await tester.pumpAndSettle();
+    for (var i = 0; i < 3; i++) {
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
+      await tester.pump(const Duration(milliseconds: 100));
+    }
   }
 
   /// Unmounts the app and lets drift's stream-cleanup timers fire before
@@ -49,7 +60,7 @@ void main() {
     for (final label in ['Home', 'Shop', 'Bag', 'Journal', 'Me']) {
       expect(find.text(label), findsWidgets, reason: label);
     }
-    expect(find.textContaining('Welcome to Zulu'), findsOneWidget);
+    expect(find.text('🪙'), findsOneWidget);
     await finish(tester);
   });
 
