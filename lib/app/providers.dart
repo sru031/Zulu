@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../content/content_bundle.dart';
@@ -69,3 +71,6 @@ final dayRepositoryProvider = Provider<DayRepository>(
 final walletRepositoryProvider = Provider<WalletRepository>(
   (ref) => WalletRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
 );
+
+/// Randomness for surprise gifts. Overridden in tests.
+final randomProvider = Provider<Random>((ref) => Random());
