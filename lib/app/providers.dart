@@ -4,10 +4,12 @@ import '../content/content_bundle.dart';
 import '../core/clock.dart';
 import '../data/db/database.dart';
 import '../data/onboarding_completer.dart';
+import '../data/repositories/day_repository.dart';
 import '../data/repositories/goal_repository.dart';
 import '../data/repositories/onboarding_repository.dart';
 import '../data/repositories/pet_repository.dart';
 import '../data/repositories/profile_repository.dart';
+import '../data/repositories/wallet_repository.dart';
 import '../theme_kit/theme_kit.dart';
 
 /// Set by `bootstrap()` at startup and by tests.
@@ -59,3 +61,11 @@ final initialOnboardedProvider = Provider<bool>((ref) => false);
 
 /// The hatched pet, or null before hatching.
 final petProvider = StreamProvider<Pet?>((ref) => ref.watch(petRepositoryProvider).watch());
+
+final dayRepositoryProvider = Provider<DayRepository>(
+  (ref) => DayRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
+);
+
+final walletRepositoryProvider = Provider<WalletRepository>(
+  (ref) => WalletRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
+);
